@@ -1,20 +1,28 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using UnityEngine;
 
 namespace Assets.Scripts.Orbs {
 
     /// <summary>
-    /// Algorithm for matching orbs
+    /// Algorithm for matching orbs, and animate the "fade out animation"
     /// </summary>
-    public static class MatchingAlgo {
+    public class AlgoMatching {
+
+        // Event raised when Orbs are matched and all fade out animation is completed with DummyOrb destroyed
+        public event EventHandler MatchingCompleted;
+        // Temporary array for storing all dummyOrbs created for animation
+        private DummyOrb[,] dummyOrbs = new DummyOrb[5, 6];
 
         /// <summary>
-        /// Matches any orbs within a 2D array of Orbs
+        /// Matches any orbs within a 2D array of Orbs, and initiates the fade out animation
         /// </summary>
         /// <param name="orbs">2D array of Orb instance</param>
-        /// <returns>List that includes lists of matched orb instance</returns>
-        public static List<List<Orb>> matchOrb(Orb[,] orbs) {
+        public void matchOrb(Orb[,] orbs) {
+            // Spawn dummyOrbs for animation
+            spawnDummyOrbs(orbs);
+            // Instantiate a List to store all matched pairs
             List<List<Orb>> matchedList = new List<List<Orb>>();
             // Loop through the rows first to find any connected 3 orbs on the rows
             for (int i=0; i<orbs.GetLength(0); i++) {
@@ -38,7 +46,46 @@ namespace Assets.Scripts.Orbs {
             }
             // Merges possible match that are spanning across both rows and columns
             matchedList = connectDups(matchedList);
-            return matchedList;
+            // Animate dummyOrbs to eliminate
+            eliminateDummyOrbs(matchedList, orbs);
+        }
+
+        /// <summary>
+        /// Search for any match in the 2D Orb array, but will not process them at all
+        /// </summary>
+        /// <param name="orbs">2D array of Orb instance</param>
+        /// <returns>True if any match is found, or false if none is found</returns>
+        public bool checkOrbToMatch(Orb[,] orbs) {
+            bool foundMatch = false;
+            // Loop through the rows first to find any connected 3 orbs on the rows
+            for (int i = 0; i < orbs.GetLength(0); i++) {
+                // Create an Orb[] that only contains 1 single row of orb
+                Orb[] orbOnRow = new Orb[6];
+                for (int j = 0; j < 6; j++) {
+                    orbOnRow[j] = orbs[i, j];
+                }
+                // Call processor function to look for any match in the 2D Orb array
+                if (matchRowColumn(orbOnRow, new List<Orb>(), new List<List<Orb>>()).Count > 0) {
+                    // Found a match
+                    foundMatch = true;
+                    break;
+                }
+            }
+            // Loop through all columns to find any connected 3 orbs on the columns
+            for (int i = 0; i < orbs.GetLength(1); i++) {
+                // Create an Orb[] that only contains 1 single column of orb
+                Orb[] orbOnColumn = new Orb[5];
+                for (int j = 0; j < 5; j++) {
+                    orbOnColumn[j] = orbs[j, i];
+                }
+                // Call processor function to look for any match in the 2D Orb array
+                if (matchRowColumn(orbOnColumn, new List<Orb>(), new List<List<Orb>>()).Count > 0) {
+                    // Found a match
+                    foundMatch = true;
+                    break;
+                }
+            }
+            return foundMatch;
         }
 
         /// <summary>
@@ -48,7 +95,7 @@ namespace Assets.Scripts.Orbs {
         /// <param name="currentlyMatching">List of Orb instance that we are currently matching, either have not reaches 3 orbs yet, or have reached 3 orbs but is not terminated by another orb with a different color</param>
         /// <param name="matched">List of list of Orb instance that has already been matched</param>
         /// <returns>List that includes lists of matched orb instance along a row or column</returns>
-        private static List<List<Orb>> matchRowColumn(Orb[] orbs, List<Orb> currentlyMatching, List<List<Orb>> matched) {
+        private List<List<Orb>> matchRowColumn(Orb[] orbs, List<Orb> currentlyMatching, List<List<Orb>> matched) {
             Orb currentOrb = orbs[0];
             if (currentlyMatching.Count == 0 || currentOrb.getType() == currentlyMatching[0].getType()) {
                 // Continue matching as the orb has the same type as those already in the list
@@ -95,7 +142,7 @@ namespace Assets.Scripts.Orbs {
         /// </note>
         /// <param name="rawMatches">Raw matches returned from matchRowColumn</param>
         /// <returns>Processed List with duplicates connected</returns>
-        private static List<List<Orb>> connectDups(List<List<Orb>> rawMatches) {
+        private List<List<Orb>> connectDups(List<List<Orb>> rawMatches) {
             // Instantiate a Dictionary that store the index that list that each Orb instance belongs it
             // For example, if Orb A belongs to List 1 in rawMatches, then the record would be { Orb A --> 1 }
             Dictionary<Orb, int> uniqueDict = new Dictionary<Orb, int>();
@@ -141,7 +188,7 @@ namespace Assets.Scripts.Orbs {
         /// <param name="pendingMerge">1D int array that describe which matches should be merged, entries should be written 2 as a pair like 1,2 for merging match 1 and match 2</param>
         /// <param name="rawMatches">Raw matches returned from matchRowColumn</param>
         /// <returns></returns>
-        private static List<List<Orb>> mergeMatches(List<int> pendingMerge, List<List<Orb>> rawMatches) {
+        private List<List<Orb>> mergeMatches(List<int> pendingMerge, List<List<Orb>> rawMatches) {
             // Instantiate a new List to store merged List
             List<List<Orb>> mergedMatches = new List<List<Orb>>();
             // Loop through pendingMerge
@@ -205,6 +252,71 @@ namespace Assets.Scripts.Orbs {
             }
             // Done
             return mergedMatches;
+        }
+
+        /// <summary>
+        /// Spawns DummyOrb based on the given Orb 2D array, which have the same sprite as the Orb instance at that position
+        /// </summary>
+        /// <param name="orbs">Referenced Orb 2D array that the spawned DummyOrb should be based on</param>
+        private void spawnDummyOrbs(Orb[,] orbs) {
+            // Loop through the Orbs array
+            for (int i = 0; i < 5; i++) {
+                for (int j = 0; j < 6; j++) {
+                    // Create DummyOrb based on Factory method
+                    dummyOrbs[i, j] = DummyOrb.Factory(orbs[i, j].transform.position, orbs[i, j].GetComponent<SpriteRenderer>().sprite, orbs[i, j].transform.localScale);
+                }
+            }
+        }
+
+        /// <summary>
+        /// Fade out certain dummyOrbs if they are matched in pairs to do the fade out animation, and call eliminate() on those Orb instance that are matched and flag them for rearrangement by AlgoRearrangement
+        /// </summary>
+        /// <param name="matches">List of Orbs that are matched</param>
+        /// <param name="orbs">2D Orb array</param>
+        private void eliminateDummyOrbs(List<List<Orb>> matches, Orb[,] orbs) {
+            // Animate dummyOrbs to fade out if they are eliminated
+            float animationDelay = 0;
+            foreach (List<Orb> match in matches) {
+                foreach (Orb orb in match) {
+                    // Fade out animation
+                    dummyOrbs[orb.row, orb.column].StartFadeOut(animationDelay);
+                    // Flag Orb for rearrangement
+                    orb.eliminate();
+                }
+                // Each animation for a new match is delayed for 0.5 seconds
+                animationDelay += 0.5f;
+            }
+            // Listen to the LAST orb that do the FadeOut animation, and attaches listener
+            List<Orb> lastMatch = matches[matches.Count - 1];
+            Orb lastOrb = lastMatch[lastMatch.Count - 1];
+            dummyOrbs[lastOrb.row, lastOrb.column].AnimationDone += animationCallback;
+        }
+
+        /// <summary>
+        /// Callback passed to DummyOrb so they will callback once their animation is done, where the DummyOrbs would be destoryed
+        /// </summary>
+        /// <param name="sender">Object that raises the event</param>
+        /// <param name="e">Empty event arguments</param>
+        private void animationCallback(object sender, EventArgs e) {
+            // Destroy DummyOrb
+            for (int i = 0; i < dummyOrbs.GetLength(0); i++) {
+                for (int j = 0; j < dummyOrbs.GetLength(1); j++) {
+                    UnityEngine.Object.Destroy(dummyOrbs[i, j].gameObject);
+                }
+            }
+            // Raise RearrangementCompleted event
+            OnMatchingCompleted(EventArgs.Empty);
+        }
+
+        /// <summary>
+        /// Raise MatchingCompleted event once the matching is completed and animation is also completed
+        /// </summary>
+        /// <param name="e">Empty event arguments</param>
+        protected virtual void OnMatchingCompleted(EventArgs e) {
+            EventHandler handler = MatchingCompleted;
+            if (handler != null) {
+                handler(this, e);
+            }
         }
 
     }
