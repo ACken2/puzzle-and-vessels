@@ -68,6 +68,9 @@ namespace Assets.Scripts.Orbs.Core {
                 PreMatching();
             }
             else {
+                // Despawn all ComboText
+                Canvas.Canvas.instance.DestructCombo();
+                // Re-enable gameplay
                 switchOrb(true);
             }
         }

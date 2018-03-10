@@ -44,6 +44,8 @@ namespace Assets.Scripts.Orbs.Core {
                 // Call processor function
                 matchedList = matchedList.Concat(matchRowColumn(orbOnColumn, new List<Orb>(), new List<List<Orb>>())).ToList();
             }
+            // Locate additional match required to connect pair without common anchor orb
+            matchedList = matchedList.Concat(findConnection(orbs, matchedList)).ToList();
             // Merges possible match that are spanning across both rows and columns
             matchedList = connectDups(matchedList);
             // Animate dummyOrbs to eliminate
@@ -131,6 +133,67 @@ namespace Assets.Scripts.Orbs.Core {
                 // Call this method again with the new list and shortened array
                 return matchRowColumn(truncatedOrbs, currentlyMatching, matched);
             }
+        }
+
+        /// <summary>
+        /// Locate pairs that can be connected by do no have a common anchor orb and returns a List of new match pairs that connect them together
+        /// </summary>
+        /// <note>
+        /// Normally, pairs with a common anchor orb will be detected and connected automatically, for instance,
+        /// X X X Y Y Y
+        /// Y Y X Y Y Y
+        /// Y Y X Y Y Y
+        /// However, some pairs can be connected but did not have a common anchor, for instance,
+        /// X X X Y Y Y
+        /// Y Y X X X X
+        /// X can be connected through [1, 2], but it won't be picked up by matchRowColumn since it does not have 3 X orbs connected
+        /// This methods aims to find those matches and return new match pair that will allow connectDups to connect them eventually
+        /// </note>
+        /// <param name="orbs">2D Orb array</param>
+        /// <param name="matchedList">Raw matches from matchRowColumn</param>
+        /// <returns>Additional match pair required to connect pair without a common anchor orb</returns>
+        private List<List<Orb>> findConnection(Orb[,] orbs, List<List<Orb>> matchedList) {
+            // Instantiate a List to store the newly found match
+            List<List<Orb>> connections = new List<List<Orb>>();
+            // Instiantiate a 2D integer array with the same dimension as orbs
+            int[,] matchMatrix = new int[orbs.GetLength(0), orbs.GetLength(1)];
+            // Set default value of -1
+            for (int i = 0; i < matchMatrix.GetLength(0); i++) {
+                for (int j = 0; j < matchMatrix.GetLength(1); j++) {
+                    matchMatrix[i, j] = -1;
+                }
+            }
+            // For each Orb that are ALREADY FOUND by matchRowColumn, set its type in the 2D integer matrix
+            foreach (List<Orb> matched in matchedList) {
+                foreach (Orb orb in matched) {
+                    matchMatrix[orb.row, orb.column] = orb.getType();
+                }
+            }
+            // Now, all Orb instance that are matched has its type inside the 2D int matrix, and all Orb instance that are not matched are represented by -1
+            // Loop through the 2D integer matrix
+            for (int i = 0; i < matchMatrix.GetLength(0) - 1; i++) {
+                for (int j = 0; j < matchMatrix.GetLength(1) - 1; j++) {
+                    // Look for Orb instance with non -1 value (picked up by matchRowColumn) and its neighbour Orb instance is also picked up and they have same type
+                    // For example,
+                    // 1 1 1 2 2 2
+                    // 1 1 1 3 3 3
+                    // These pair (those 1) should be connected
+                    // We do so by adding a match with [0, 0] and [1, 0] so when we run the connection algorithm, it will picked up and merged by them
+                    if (matchMatrix[i, j] != -1 && matchMatrix[i, j] == matchMatrix[i + 1, j]) {
+                        List<Orb> matches = new List<Orb>();
+                        matches.Add(orbs[i, j]);
+                        matches.Add(orbs[i + 1, j]);
+                        connections.Add(matches);
+                    }
+                    if (matchMatrix[i, j] != -1 && matchMatrix[i, j] == matchMatrix[i, j + 1]) {
+                        List<Orb> matches = new List<Orb>();
+                        matches.Add(orbs[i, j]);
+                        matches.Add(orbs[i, j + 1]);
+                        matchedList.Add(matches);
+                    }
+                }
+            }
+            return connections;
         }
 
         /// <summary>
@@ -277,12 +340,18 @@ namespace Assets.Scripts.Orbs.Core {
             // Animate dummyOrbs to fade out if they are eliminated
             float animationDelay = 0;
             foreach (List<Orb> match in matches) {
+                // Temporary Vector3 for calculating the geometrical midpoint between all orbs in the matched pair
+                Vector3 geometricalMidpoint = Vector3.zero;
                 foreach (Orb orb in match) {
                     // Fade out animation
                     dummyOrbs[orb.row, orb.column].StartFadeOut(animationDelay);
                     // Flag Orb for rearrangement
                     orb.eliminate();
+                    geometricalMidpoint += orb.transform.position;
                 }
+                // Calculate the midpoint and spawn ComboText onto that point
+                geometricalMidpoint = geometricalMidpoint / match.Count;
+                Canvas.Canvas.instance.PrintNewCombo(geometricalMidpoint, animationDelay);
                 // Each animation for a new match is delayed for 0.5 seconds
                 animationDelay += 0.5f;
             }
