@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Timers;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.EventSystems;
 
 namespace Assets.Scripts.Orbs.Core {
@@ -19,9 +14,6 @@ namespace Assets.Scripts.Orbs.Core {
         private static Orb selectedOrb = null;
         private static GameObject currentTracker = null;
         private static int originalSelectedType = -1;
-
-        private static DummyOrb[,] dummyOrbs = null;
-        private static int orbEliminationCount = 0;
 
         /// <summary>
         /// Each Orb instance should register here at Start() method
@@ -57,6 +49,8 @@ namespace Assets.Scripts.Orbs.Core {
                     selectedOrb.OnDeselectOrb();
                     newSelectedOrb.OnSelectedOrb();
                     selectedOrb = newSelectedOrb;
+                    // Play movement sound
+                    Sound.SoundSystem.instance.playMovementSFX();
                 }
             }
         }
