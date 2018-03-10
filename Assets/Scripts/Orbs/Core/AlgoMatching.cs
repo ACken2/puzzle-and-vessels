@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-namespace Assets.Scripts.Orbs {
+namespace Assets.Scripts.Orbs.Core {
 
     /// <summary>
     /// Algorithm for matching orbs, and animate the "fade out animation"

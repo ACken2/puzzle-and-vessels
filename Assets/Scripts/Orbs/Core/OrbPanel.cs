@@ -2,10 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Timers;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-namespace Assets.Scripts.Orbs {
+namespace Assets.Scripts.Orbs.Core {
 
     /// <summary>
     /// Static class that controls the Orb panel and Orbs
@@ -18,6 +19,9 @@ namespace Assets.Scripts.Orbs {
         private static Orb selectedOrb = null;
         private static GameObject currentTracker = null;
         private static int originalSelectedType = -1;
+
+        private static DummyOrb[,] dummyOrbs = null;
+        private static int orbEliminationCount = 0;
 
         /// <summary>
         /// Each Orb instance should register here at Start() method
@@ -58,19 +62,17 @@ namespace Assets.Scripts.Orbs {
         }
 
         public static void OnEndDrag() {
+            // Swap the currently selectedOrb with the type of the initally selected Orb
             selectedOrb.OnSwap(originalSelectedType);
             selectedOrb.OnDeselectOrb();
+            // Reset the variable related to selected orb
             originalSelectedType = -1;
             selectedOrb = null;
+            // Destroy the tracker
             UnityEngine.Object.Destroy(currentTracker);
-            List<List<Orb>> matches = MatchingAlgo.matchOrb(orbs);
-            foreach (List<Orb> lo in matches) {
-                String a = "";
-                foreach (Orb o in lo) {
-                    a += o;
-                }
-                Debug.Log(a);
-            }
+            // Initiate AlgoPostDrag and let it handle post-drag events
+            AlgoPostDrag apd = new AlgoPostDrag(orbs);
+            apd.process();
         }
 
         private static void spawnTrackingOrb(Orb original) {

@@ -1,7 +1,7 @@
 ﻿using System;
 using UnityEngine;
 
-namespace Assets.Scripts.Orbs {
+namespace Assets.Scripts.Orbs.Core {
 
     /// <summary>
     /// Script attached to dummy orb that are used for fade out or translation animation

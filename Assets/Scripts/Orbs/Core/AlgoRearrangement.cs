@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Assets.Scripts.Orbs {
+namespace Assets.Scripts.Orbs.Core {
 
     /// <summary>
     /// Class that contain the algorithm for rearranging orbs after some are being eliminated, and animate the "falling animation" of the newly created orb

@@ -1,7 +1,7 @@
 ﻿using System;
 using UnityEngine;
 
-namespace Assets.Scripts.Orbs {
+namespace Assets.Scripts.Orbs.Core {
 
     /// <summary>
     /// Handle all operations after OnEndDrag, and raise PostDragOpDone event once everything is settled

@@ -3,7 +3,7 @@ using UnityEngine.EventSystems;
 using System;
 using System.Collections;
 
-namespace Assets.Scripts.Orbs {
+namespace Assets.Scripts.Orbs.Core {
 
     public class Orb : MonoBehaviour {
 
@@ -19,6 +19,8 @@ namespace Assets.Scripts.Orbs {
         // 
         private bool mouseDown = false;
         private const float selectedAlpha = 0.8f;
+
+        private SpriteRenderer sprite;
 
         // Used in orb swapping movement
         private int animationConstant = 10;
@@ -43,21 +45,32 @@ namespace Assets.Scripts.Orbs {
             trigger.triggers.Add(endDragEntry);
             // Register to OrbPanel
             OrbPanel.regOrb(this, row, column);
+            // Cache sprite renderer instance
+            sprite = GetComponent<SpriteRenderer>();
             // Randomize orb type
             type = GetRandomNumber(1, 4);
-            GetComponent<SpriteRenderer>().sprite = getCurrentSprite();
+            // Update sprite
+            updateSprite();
         }
 
         // Update is called once per frame
         public void Update() {
             if (moveTarget.magnitude != 0) {
-                // rotate();
                 move();
             }
         }
 
         public int getType() {
             return type;
+        }
+
+        public void setType(int type) {
+            this.type = type;
+            updateSprite();
+        }
+
+        public void eliminate() {
+            type = -1;
         }
 
         public void OnMouseDown() {
@@ -82,16 +95,16 @@ namespace Assets.Scripts.Orbs {
         }
 
         public void OnSelectedOrb() {
-            GetComponent<SpriteRenderer>().color -= new Color(0, 0, 0, selectedAlpha);
+            sprite.color -= new Color(0, 0, 0, selectedAlpha);
         }
 
         public void OnDeselectOrb() {
-            GetComponent<SpriteRenderer>().color += new Color(0, 0, 0, selectedAlpha);
+            sprite.color += new Color(0, 0, 0, selectedAlpha);
         }
 
         public void OnSwap(int newType) {
             type = newType;
-            GetComponent<SpriteRenderer>().sprite = getCurrentSprite();
+            updateSprite();
         }
 
         private void move() {
@@ -108,19 +121,19 @@ namespace Assets.Scripts.Orbs {
         }
 
 
-        private Sprite getCurrentSprite() {
+        private void updateSprite() {
             if (type == 1) {
-                return typeOneOrb;
+                sprite.sprite = typeOneOrb;
             }
             else if (type == 2) {
-                return typeTwoOrb;
+                sprite.sprite = typeTwoOrb;
             }
             else {
-                return typeThreeOrb;
+                sprite.sprite = typeThreeOrb;
             }
         }
 
-        private static int GetRandomNumber(int min, int max) {
+        public static int GetRandomNumber(int min, int max) {
             lock (getrandom) // synchronize
             {
                 return getrandom.Next(min, max);
