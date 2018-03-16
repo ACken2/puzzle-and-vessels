@@ -8,7 +8,13 @@ namespace Assets.Scripts.Orbs.Core {
     /// </summary>
     public class AlgoPostDrag {
 
-        // 2D orb array
+        /// <summary>
+        /// Event raised when everything is completed
+        /// </summary>
+        public event EventHandler PostDragOpDone;
+        /// <summary>
+        /// 2D orb array
+        /// </summary>
         private Orb[,] orbs;
 
         /// <summary>
@@ -17,6 +23,17 @@ namespace Assets.Scripts.Orbs.Core {
         /// <param name="postDragOrbs">2D orb array</param>
         public AlgoPostDrag(Orb[,] postDragOrbs) {
             orbs = postDragOrbs;
+        }
+
+        /// <summary>
+        /// Raise PostDragOpDone event once we are done
+        /// </summary>
+        /// <param name="e">Empty event arguments</param>
+        protected virtual void OnPostDragOpDone(EventArgs e) {
+            EventHandler handler = PostDragOpDone;
+            if (handler != null) {
+                handler(this, e);
+            }
         }
 
         /// <summary>
@@ -30,6 +47,8 @@ namespace Assets.Scripts.Orbs.Core {
             }
             else {
                 switchOrb(true);
+                // Raise completed event
+                OnPostDragOpDone(EventArgs.Empty);
             }
         }
 
@@ -69,9 +88,11 @@ namespace Assets.Scripts.Orbs.Core {
             }
             else {
                 // Despawn all ComboText
-                Canvas.Canvas.instance.DestructCombo();
+                Canvas.CanvasController.instance.DestructCombo();
                 // Re-enable gameplay
                 switchOrb(true);
+                // Raise completed event
+                OnPostDragOpDone(EventArgs.Empty);
             }
         }
 
