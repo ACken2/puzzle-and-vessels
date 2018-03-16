@@ -8,9 +8,13 @@ namespace Assets.Scripts.Orbs.Sound {
     [RequireComponent(typeof(AudioSource))]
     public class OrbEliminationSFX: MonoBehaviour {
 
-        // Timer for self destruct
+        /// <summary>
+        /// Timer for self destruct
+        /// </summary>
         private float selfdestruct = 0;
-        // Maximum lifespan of this instance
+        /// <summary>
+        /// Maximum lifespan of this instance
+        /// </summary>
         private float selfdestructLimit = 1;
 
         /// <summary>

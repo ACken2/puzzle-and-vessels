@@ -10,9 +10,13 @@ namespace Assets.Scripts.Orbs.Core {
     /// </summary>
     public class AlgoMatching {
 
-        // Event raised when Orbs are matched and all fade out animation is completed with DummyOrb destroyed
+        /// <summary>
+        /// Event raised when Orbs are matched and all fade out animation is completed with DummyOrb destroyed
+        /// </summary>
         public event EventHandler MatchingCompleted;
-        // Temporary array for storing all dummyOrbs created for animation
+        /// <summary>
+        /// Temporary array for storing all dummyOrbs created for animation
+        /// </summary>
         private DummyOrb[,] dummyOrbs = new DummyOrb[5, 6];
 
         /// <summary>
@@ -351,7 +355,7 @@ namespace Assets.Scripts.Orbs.Core {
                 }
                 // Calculate the midpoint and spawn ComboText onto that point
                 geometricalMidpoint = geometricalMidpoint / match.Count;
-                Canvas.Canvas.instance.PrintNewCombo(geometricalMidpoint, animationDelay);
+                Canvas.CanvasController.instance.PrintNewCombo(geometricalMidpoint, animationDelay);
                 // Each animation for a new match is delayed for 0.5 seconds
                 animationDelay += 0.5f;
             }

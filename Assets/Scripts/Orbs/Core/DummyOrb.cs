@@ -8,22 +8,36 @@ namespace Assets.Scripts.Orbs.Core {
     /// </summary>
     public class DummyOrb : MonoBehaviour {
 
-        // Event raised when the animation is completed
+        /// <summary>
+        /// Event raised when the animation is completed
+        /// </summary>
         public event EventHandler AnimationDone;
 
-        // Sprite to be displayed for this dummy orb
+        /// <summary>
+        /// Sprite to be displayed for this dummy orb
+        /// </summary>
         private SpriteRenderer sprite = null;
 
-        // Delay for starting the fade out animation
+        /// <summary>
+        /// Delay for starting the fade out animation
+        /// </summary>
         private float delayFadeout = -1;
-        // Count up timer unil we reach the delay in fade out animation
+        /// <summary>
+        /// Count up timer unil we reach the delay in fade out animation
+        /// </summary>
         private float delayFadeoutTimer = 0;
-        // Changes in opacity per update during the fade out animation
+        /// <summary>
+        /// Changes in opacity per update during the fade out animation
+        /// </summary>
         private Color fadePerUpdate = new Color(0, 0, 0, 0.1f);
 
-        // Store the Vector3 for the target destination of the translation animation
+        /// <summary>
+        /// Store the Vector3 for the target destination of the translation animation
+        /// </summary>
         private Vector3 translateDest = Vector3.zero;
-        // Magnitude of translation per update
+        /// <summary>
+        /// Magnitude of translation per update
+        /// </summary>
         private Vector3 translatePerUpdate = new Vector3(0, -0.1f, 0);
 
         /// <summary>

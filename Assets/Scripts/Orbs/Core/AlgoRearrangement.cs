@@ -9,11 +9,17 @@ namespace Assets.Scripts.Orbs.Core {
     /// </summary>
     public class AlgoRearrangement {
 
-        // Event raised when Orbs are rearranged and all translation animation is completed with DummyOrb destroyed
+        /// <summary>
+        /// Event raised when Orbs are rearranged and all translation animation is completed with DummyOrb destroyed
+        /// </summary>
         public event EventHandler RearrangementCompleted;
-        // List of DummyOrb spawned for animation
+        /// <summary>
+        /// List of DummyOrb spawned for animation
+        /// </summary>
         private List<DummyOrb> dummyOrbs = new List<DummyOrb>();
-        // List of DummyOrb spawned with no animation
+        /// <summary>
+        /// List of DummyOrb spawned with no animation
+        /// </summary>
         private List<DummyOrb> staticDummyOrbs = new List<DummyOrb>();
 
         /// <summary>

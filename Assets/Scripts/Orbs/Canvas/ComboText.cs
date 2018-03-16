@@ -8,12 +8,18 @@ namespace Assets.Scripts.Orbs.Canvas {
     /// </summary>
     public class ComboText : MonoBehaviour {
 
-        // Delay in seconds for the animation to begin
+        /// <summary>
+        /// Delay in seconds for the animation to begin
+        /// </summary>
         private float delaySet = -1;
-        // Delay counter to increment till the animation has begun
+        /// <summary>
+        /// Delay counter to increment till the animation has begun
+        /// </summary>
         private float delayTimer = 0;
 
-        // Animator instance of this ComboText instance
+        /// <summary>
+        /// Animator instance of this ComboText instance
+        /// </summary>
         private Animator animator;
 
         /// <summary>
