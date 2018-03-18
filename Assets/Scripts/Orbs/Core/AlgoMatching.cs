@@ -356,6 +356,8 @@ namespace Assets.Scripts.Orbs.Core {
                 // Calculate the midpoint and spawn ComboText onto that point
                 geometricalMidpoint = geometricalMidpoint / match.Count;
                 Canvas.CanvasController.instance.PrintNewCombo(geometricalMidpoint, animationDelay);
+                // Notify Coordinator
+                Coordinator.Coordinator.NotifyIncrementCombo();
                 // Each animation for a new match is delayed for 0.5 seconds
                 animationDelay += 0.5f;
             }

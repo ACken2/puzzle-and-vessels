@@ -9,11 +9,6 @@ namespace Assets.Scripts.Orbs.Canvas {
     public class CanvasController : MonoBehaviour {
 
         /// <summary>
-        /// Counter for the number of Combo to this instance
-        /// </summary>
-        private int comboCounter = 1;
-
-        /// <summary>
         /// Combo text template
         /// </summary>
         public GameObject comboTemplate;
@@ -42,9 +37,8 @@ namespace Assets.Scripts.Orbs.Canvas {
         /// <param name="position">Vector3 position that this ComboText should be located</param>
         /// <param name="delayAppearence">Delay in second that this ComboText should be visible and SFX is played</param>
         public void PrintNewCombo(Vector3 position, float delayAppearence) {
-            combo.Add(ComboText.Factory(comboTemplate, this.transform, position, delayAppearence, "Combo " + comboCounter));
-            Sound.SoundSystem.instance.playComboSFX(comboCounter, delayAppearence);
-            comboCounter++;
+            combo.Add(ComboText.Factory(comboTemplate, this.transform, position, delayAppearence, "Combo " + Coordinator.Coordinator.GetCombo()));
+            Sound.SoundSystem.instance.playComboSFX(Coordinator.Coordinator.GetCombo(), delayAppearence);
         }
 
         /// <summary>
@@ -55,7 +49,6 @@ namespace Assets.Scripts.Orbs.Canvas {
                 ct.endAnimation();
             }
             combo.Clear();
-            comboCounter = 1;
         }
 
     }

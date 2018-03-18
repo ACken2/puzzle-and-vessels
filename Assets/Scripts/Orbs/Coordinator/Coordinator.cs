@@ -24,6 +24,10 @@ namespace Assets.Scripts.Orbs.Coordinator {
         /// Boolean storing whether a dialog box is currently active
         /// </summary>
         private static bool dialogActive = false;
+        /// <summary>
+        /// Counter for the number of Combo to this instance
+        /// </summary>
+        private static int comboCounter = 1;
 
         /// <summary>
         /// All Character instance should call this method to register in the Coordinator
@@ -69,6 +73,7 @@ namespace Assets.Scripts.Orbs.Coordinator {
             // Reset variables as round end
             roundProgressing = false;
             skillUsedInCurrentRound = false;
+            comboCounter = 1;
         }
 
         /// <summary>
@@ -86,12 +91,27 @@ namespace Assets.Scripts.Orbs.Coordinator {
         }
 
         /// <summary>
+        /// Notify Coordinator that a new combo has been found
+        /// </summary>
+        public static void NotifyIncrementCombo() {
+            comboCounter += 1;
+        }
+
+        /// <summary>
         /// Get whether player can now move orb
         /// </summary>
         /// <returns>Boolean stating whether player movement on Orb should be entertained now</returns>
         public static bool GetOrbMovable() {
             // False if there is an active dialog box
             return !dialogActive;
+        }
+
+        /// <summary>
+        /// Get the current combo counter
+        /// </summary>
+        /// <returns>Current combo count</returns>
+        public static int GetCombo() {
+            return comboCounter;
         }
 
     }
