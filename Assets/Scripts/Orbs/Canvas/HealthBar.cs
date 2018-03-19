@@ -52,6 +52,9 @@ namespace Assets.Scripts.Orbs.Canvas {
             // Initialize variables
             instance = this;
             barLogo = transform.parent.GetChild(2).GetComponent<Image>();
+            // Get maximum health
+            maxHealth = Coordinator.StageManager.instance.getMaxRound();
+            health = maxHealth;
             // Update health bar
             healthBar.UpdateBar(health, maxHealth);
         }
