@@ -44,6 +44,8 @@ namespace Assets.Scripts.Orbs.Canvas {
             particle = transform.parent.GetComponent<ParticleSystem>();
             coreAnimator = GetComponent<Animator>();
             bgAnimator = transform.GetChild(0).GetComponentInChildren<Animator>();
+            // Register
+            Coordinator.Coordinator.RegisterCharacter(this);
             // Start all character with skill ready
             SkillReady();
         }
@@ -56,6 +58,15 @@ namespace Assets.Scripts.Orbs.Canvas {
             if (skillReady && Coordinator.Coordinator.RequestSkillsActivation()) {
                 SkillDialogBox.instance.ConfirmSkill += SkillActivate;
                 SkillDialogBox.instance.displaySkill(skill);
+            }
+        }
+
+        /// <summary>
+        /// Called on every end turn to try to reactivate the skill of this character
+        /// </summary>
+        public void ReactivateSkill() {
+            if (!skillReady) {
+                SkillReady();
             }
         }
 
@@ -93,6 +104,8 @@ namespace Assets.Scripts.Orbs.Canvas {
                 // Spawn 1 particle
                 particle.Emit(param, 1);
             }
+            // Notify skill activation to Coordinator
+            Coordinator.Coordinator.NotifySkillsActivation(skill);
             // Set skill ready to false
             skillReady = false;
             // Play the SFX
