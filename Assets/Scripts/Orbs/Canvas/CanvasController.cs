@@ -26,7 +26,6 @@ namespace Assets.Scripts.Orbs.Canvas {
         /// Instantiate Canvas instance
         /// </summary>
         public void Start() {
-            Data.Skills.LoadSkill();
             // Store the instance for static external access
             CanvasController.instance = this;
         }
