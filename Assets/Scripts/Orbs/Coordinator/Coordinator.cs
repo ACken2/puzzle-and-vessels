@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using UnityEngine;
 
 namespace Assets.Scripts.Orbs.Coordinator {
 
@@ -20,6 +21,10 @@ namespace Assets.Scripts.Orbs.Coordinator {
         /// Boolean storing a skill has already been used in this round
         /// </summary>
         private static bool skillUsedInCurrentRound = false;
+        /// <summary>
+        /// String storing the skill that is used
+        /// </summary>
+        private static string skillUsed;
         /// <summary>
         /// Boolean storing whether a dialog box is currently active
         /// </summary>
@@ -49,8 +54,9 @@ namespace Assets.Scripts.Orbs.Coordinator {
         /// <summary>
         /// Notify Coordinator that a skill has been activated
         /// </summary>
-        public static void NotifySkillsActivation() {
+        public static void NotifySkillsActivation(string skillId) {
             skillUsedInCurrentRound = true;
+            skillUsed = skillId;
         }
 
         /// <summary>
@@ -65,10 +71,25 @@ namespace Assets.Scripts.Orbs.Coordinator {
         /// </summary>
         /// <param name="validRound">Valid round is a round where user has moved an orb</param>
         public static void NotifyRoundEnded(bool validRound) {
-            // Decrement timer if it is a valid round
+            // Check valid round
             // A round can be invalid if the player only click on an orb without moving it
             if (validRound) {
+                // Decrement timer if it is a valid round
                 Canvas.HealthBar.instance.OnRoundEnded();
+                // Reactivate used skill if any
+                foreach (Canvas.Character character in characters) {
+                    character.ReactivateSkill();
+                }
+                // Attack the enemy and see if it dies
+                bool dead = Canvas.Enemy.instance.Attack(skillUsed, comboCounter);
+                // Load next stage if dead
+                if (dead) {
+                    if (StageManager.instance.NotifyNextStage()) {
+                        // Game ended
+                        Canvas.ClearText.instance.DisplayClearText();
+                        Canvas.GameClearDialogBox.instance.EndGame(StageManager.instance.getEndGameMessage());
+                    }
+                }
             }
             // Reset variables as round end
             roundProgressing = false;
@@ -95,6 +116,10 @@ namespace Assets.Scripts.Orbs.Coordinator {
         /// </summary>
         public static void NotifyIncrementCombo() {
             comboCounter += 1;
+        }
+
+        public static void NotifyEndGame() {
+            Debug.Log("THE END");
         }
 
         /// <summary>
