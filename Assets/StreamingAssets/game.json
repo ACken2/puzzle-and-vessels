@@ -1,0 +1,25 @@
+﻿{
+    "games": [
+        {
+            "gameName": "TESTING GAME",
+            "maxAllowedTurn": 5,
+            "endGameMessage": "Thank you for trying out the demo",
+            "stages": [
+                {
+                    "spriteId": "MISSING_NO",
+                    "effectiveSkill": [
+                        "c1bd09cd-1e8c-4e63-92c0-358d71bd9b8d"
+                    ],
+                    "combo": 5
+                },
+                {
+                    "spriteId": "MISSING_NO",
+                    "effectiveSkill": [
+                        "c1bd09cd-1e8c-4e63-92c0-358d71bd9b8d"
+                    ],
+                    "combo":  10
+                }
+            ]
+        }
+    ]
+}
