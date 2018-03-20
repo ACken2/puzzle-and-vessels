@@ -85,9 +85,16 @@ namespace Assets.Scripts.Orbs.Coordinator {
                 // Load next stage if dead
                 if (dead) {
                     if (StageManager.instance.NotifyNextStage()) {
+                        // Play SFX
+                        Sound.SoundSystem.instance.playStageClear();
                         // Game ended
                         Canvas.ClearText.instance.DisplayClearText();
                         Canvas.GameClearDialogBox.instance.EndGame(StageManager.instance.getEndGameMessage());
+                    }
+                    else {
+                        // Next stage
+                        // Play SFX
+                        Sound.SoundSystem.instance.playTransition();
                     }
                 }
             }
