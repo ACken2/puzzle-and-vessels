@@ -13,6 +13,11 @@ namespace Assets.Scripts.Orbs.Sound {
         public static SoundSystem instance;
 
         /// <summary>
+        /// Sound player of the background music
+        /// </summary>
+        public AudioSource bgm;
+
+        /// <summary>
         /// Template for the OrbEliminationTemplateSFX sound player
         /// </summary>
         public OrbEliminationSFX orbEliminationTemplate;
@@ -38,6 +43,18 @@ namespace Assets.Scripts.Orbs.Sound {
         /// Sound player for SkillUseSFX
         /// </summary>
         public AudioSource skillUse;
+        /// <summary>
+        /// Sound player for AttackSFX
+        /// </summary>
+        public AudioSource attack;
+        /// <summary>
+        /// Sound player for StageTransitionSFX
+        /// </summary>
+        public AudioSource stageTransition;
+        /// <summary>
+        /// Sound player for StageClearSFX
+        /// </summary>
+        public AudioSource stageClear;
 
         /// <summary>
         /// Initialize the class
@@ -47,6 +64,8 @@ namespace Assets.Scripts.Orbs.Sound {
             instance = this;
             // Set the template to have eternal life
             orbEliminationTemplate.SetEternal();
+            // Play BGM after 4 second
+            bgm.PlayDelayed(4);
         }
 
         /// <summary>
@@ -80,6 +99,22 @@ namespace Assets.Scripts.Orbs.Sound {
         /// </summary>
         public void playSkillUse() {
             skillUse.Play();
+        }
+
+        /// <summary>
+        /// Play the SFX for stage transition and attack
+        /// </summary>
+        public void playTransition() {
+            attack.Play();
+            stageTransition.PlayDelayed(1); // Play transition 1 second later
+        }
+
+        /// <summary>
+        /// Play the SFX for stage clear and pause BGM
+        /// </summary>
+        public void playStageClear() {
+            bgm.Pause();
+            stageClear.Play();
         }
 
     }
