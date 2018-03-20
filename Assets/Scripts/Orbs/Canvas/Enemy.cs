@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace Assets.Scripts.Orbs.Canvas {
 
@@ -13,6 +14,10 @@ namespace Assets.Scripts.Orbs.Canvas {
         /// Allow static access to this script
         /// </summary>
         public static Enemy instance;
+        /// <summary>
+        /// UI text component of the shield incidator
+        /// </summary>
+        public Text shieldText;
         /// <summary>
         /// Allow EventListener to be attached to AnimationCompleted event
         /// </summary>
@@ -54,6 +59,8 @@ namespace Assets.Scripts.Orbs.Canvas {
             switchImage.SwitchImage(spritePath);
             acceptedSkill = (string[]) skillEffective.Clone();
             minimumCombo = minCombo;
+            shieldText.transform.parent.gameObject.SetActive(true);
+            shieldText.text = minimumCombo.ToString();
         }
 
         /// <summary>
@@ -89,6 +96,7 @@ namespace Assets.Scripts.Orbs.Canvas {
         /// Raise AnimationCompleted event when fade out is done
         /// </summary>
         public void OnFadeOutCompleted() {
+            shieldText.transform.parent.gameObject.SetActive(false);
             animationEvent.OnAnimationCompleted(EventArgs.Empty);
         }
 
