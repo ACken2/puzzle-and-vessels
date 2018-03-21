@@ -2,6 +2,9 @@
 
 namespace Assets.Scripts.Orbs.Canvas {
 
+    /// <summary>
+    /// UI class for controlling the Fader in GameCore
+    /// </summary>
     public class Fader : MonoBehaviour {
 
         /// <summary>
