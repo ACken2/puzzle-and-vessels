@@ -16,26 +16,18 @@ namespace Assets.Scripts.Data {
         /// <summary>
         /// File path to the data file
         /// </summary>
-        private static readonly string gameDataJson = "game.json";
+        private static readonly string gameDataJson = "game";
 
         /// <summary>
         /// Load all game data in game.json
         /// </summary>
         public static void LoadGame() {
-            // Compute absolute file path
-            string filePath = Path.Combine(Application.streamingAssetsPath, gameDataJson);
-            // Check if file existed
-            if (File.Exists(filePath)) {
-                // Read the json file and convert to SkillJson object
-                string json = File.ReadAllText(filePath);
-                GameJson loadedData = JsonUtility.FromJson<GameJson>(json);
-                // Store the loaded array
-                loadedGames = loadedData.games;
-            }
-            else {
-                // Log warning if the skill is not found
-                Debug.LogWarning("ERROR: game.json missing!");
-            }
+            /// Load Json
+            TextAsset jsonAsset = Resources.Load("Data/" + gameDataJson) as TextAsset;
+            string json = jsonAsset.ToString();
+            GameJson loadedData = JsonUtility.FromJson<GameJson>(json);
+            // Store the loaded array
+            loadedGames = loadedData.games;
         }
 
         /// <summary>

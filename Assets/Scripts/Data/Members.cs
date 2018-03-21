@@ -17,27 +17,19 @@ namespace Assets.Scripts.Data {
         /// <summary>
         /// File path to the data file
         /// </summary>
-        private static readonly string gameDataJson = "member.json";
+        private static readonly string memberDataJson = "member";
 
         /// <summary>
         /// Load all game data in member.json
         /// </summary>
         public static void LoadMember() {
-            // Compute absolute file path
-            string filePath = Path.Combine(Application.streamingAssetsPath, gameDataJson);
-            // Check if file existed
-            if (File.Exists(filePath)) {
-                // Read the json file and convert to MemberJson object
-                string json = File.ReadAllText(filePath);
-                MemberJson loadedData = JsonUtility.FromJson<MemberJson>(json);
-                // Store the skill reference
-                foreach (Member mem in loadedData.members) {
-                    memberSkillDict.Add(mem.uuid, mem.skillUUID);
-                }
-            }
-            else {
-                // Log warning if the skill is not found
-                Debug.LogWarning("ERROR: member.json missing!");
+            // Load Json
+            TextAsset jsonAsset = Resources.Load("Data/" + memberDataJson) as TextAsset;
+            string json = jsonAsset.ToString();
+            MemberJson loadedData = JsonUtility.FromJson<MemberJson>(json);
+            // Store the skill reference
+            foreach (Member mem in loadedData.members) {
+                memberSkillDict.Add(mem.uuid, mem.skillUUID);
             }
         }
 

@@ -18,27 +18,19 @@ namespace Assets.Scripts.Data {
         /// <summary>
         /// File path of the skill data file
         /// </summary>
-        private static readonly string skillDataJson = "skill.json";
+        private static readonly string skillDataJson = "skill";
 
         /// <summary>
         /// Load all skills in skill.json
         /// </summary>
         public static void LoadSkill() {
-            // Compute absolute file path
-            string filePath = Path.Combine(Application.streamingAssetsPath, skillDataJson);
-            // Check if file existed
-            if (File.Exists(filePath)) {
-                // Read the json file and convert to SkillJson object
-                string json = File.ReadAllText(filePath);
-                SkillJson loadedData = JsonUtility.FromJson<SkillJson>(json);
-                // Loop through the array and add it to the dictionary
-                foreach (Skill skill in loadedData.skills) {
-                    skillDict.Add(skill.uuid, skill.skill);
-                }
-            }
-            else {
-                // Log warning if the skill is not found
-                Debug.LogWarning("ERROR: skill.json missing!");
+            // Load Json
+            TextAsset jsonAsset = Resources.Load("Data/" + skillDataJson) as TextAsset;
+            string json = jsonAsset.ToString();
+            SkillJson loadedData = JsonUtility.FromJson<SkillJson>(json);
+            // Loop through the array and add it to the dictionary
+            foreach (Skill skill in loadedData.skills) {
+                skillDict.Add(skill.uuid, skill.skill);
             }
         }
 
