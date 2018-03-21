@@ -3,6 +3,9 @@ using UnityEngine.UI;
 
 namespace Assets.Scripts.Orbs.Canvas {
 
+    /// <summary>
+    /// UI class for controlling the game clear dialog box
+    /// </summary>
     public class GameClearDialogBox : MonoBehaviour {
 
         /// <summary>

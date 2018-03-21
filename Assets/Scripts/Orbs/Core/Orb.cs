@@ -3,6 +3,9 @@ using UnityEngine.EventSystems;
 
 namespace Assets.Scripts.Orbs.Core {
 
+    /// <summary>
+    /// Class controlling the Orb game object
+    /// </summary>
     public class Orb : MonoBehaviour {
 
         /// <summary>
