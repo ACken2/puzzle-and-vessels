@@ -193,6 +193,8 @@ namespace Assets.Scripts.Orbs.Core {
         /// <param name="sender">Object that raises the event</param>
         /// <param name="e">Empty event arguments</param>
         private static void PostTimerReached(object sender, EventArgs e) {
+            // SFX
+            Sound.SoundSystem.instance.playMovementTimeout();
             // Force drag done
             OnEndDrag(false);
         }

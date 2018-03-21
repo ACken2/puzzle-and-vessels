@@ -59,6 +59,10 @@ namespace Assets.Scripts.Orbs.Sound {
         /// Sound player for StageFailedSFX
         /// </summary>
         public AudioSource stageFailed;
+        /// <summary>
+        /// Sound player for movement timeout
+        /// </summary>
+        public AudioSource movementTimeout;
 
         /// <summary>
         /// Initialize the class
@@ -127,6 +131,13 @@ namespace Assets.Scripts.Orbs.Sound {
         public void playStageFail() {
             bgm.Pause();
             stageFailed.Play();
+        }
+
+        /// <summary>
+        /// Play the SFX for movement failure
+        /// </summary>
+        public void playMovementTimeout() {
+            movementTimeout.Play();
         }
 
     }
