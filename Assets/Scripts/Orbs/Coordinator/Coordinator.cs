@@ -70,6 +70,7 @@ namespace Assets.Scripts.Orbs.Coordinator {
         /// </summary>
         /// <param name="validRound">Valid round is a round where user has moved an orb</param>
         public static void NotifyRoundEnded(bool validRound) {
+            bool ended = false; // Boolean storing whether the game has ended
             // Check valid round
             // A round can be invalid if the player only click on an orb without moving it
             if (validRound) {
@@ -85,6 +86,8 @@ namespace Assets.Scripts.Orbs.Coordinator {
                     // Game ended
                     Canvas.LostText.instance.DisplayLostText();
                     Canvas.LostDialogBox.instance.EndGame();
+                    // Set game ended
+                    ended = true;
                 }
                 else {
                     // Continue the game
@@ -98,17 +101,21 @@ namespace Assets.Scripts.Orbs.Coordinator {
                             // Game ended
                             Canvas.ClearText.instance.DisplayClearText();
                             Canvas.GameClearDialogBox.instance.EndGame(StageManager.instance.getEndGameMessage());
+                            // Set game ended
+                            ended = true;
                         }
                         else {
                             // Next stage
-                            // Reactivate used skill if any
-                            foreach (Canvas.Character character in characters) {
-                                character.ReactivateSkill();
-                            }
                             // Play SFX
                             Sound.SoundSystem.instance.playTransition();
                         }
                     }
+                }
+            }
+            if (!ended) {
+                // Reactivate used skill if the game has not ended yet
+                foreach (Canvas.Character character in characters) {
+                    character.ReactivateSkill();
                 }
             }
             // Reset variables as round end
