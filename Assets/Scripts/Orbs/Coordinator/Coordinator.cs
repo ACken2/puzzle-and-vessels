@@ -74,28 +74,40 @@ namespace Assets.Scripts.Orbs.Coordinator {
             // A round can be invalid if the player only click on an orb without moving it
             if (validRound) {
                 // Decrement timer if it is a valid round
-                Canvas.HealthBar.instance.OnRoundEnded();
-                // Reactivate used skill if any
-                foreach (Canvas.Character character in characters) {
-                    character.ReactivateSkill();
+                bool roundDepleted = Canvas.HealthBar.instance.OnRoundEnded();
+                // Check if all round are depleted
+                if (roundDepleted) {
+                    // Player Lost
+                    // Animate Orb falldown
+                    Canvas.OrbPanel.instance.PlayFailAnimation();
+                    // Play SFX
+                    Sound.SoundSystem.instance.playStageFail();
+                    // Game ended
+                    Canvas.LostText.instance.DisplayLostText();
+                    Canvas.LostDialogBox.instance.EndGame();
                 }
-                // Attack the enemy and see if it dies
-                bool dead = Canvas.Enemy.instance.Attack(skillUsed, comboCounter);
-                // Load next stage if dead
-                if (dead) {
-                    if (StageManager.instance.NotifyNextStage()) {
-                        // Play SFX
-                        Sound.SoundSystem.instance.playStageClear();
-                        // Block input
-                        dialogActive = true;
-                        // Game ended
-                        Canvas.ClearText.instance.DisplayClearText();
-                        Canvas.GameClearDialogBox.instance.EndGame(StageManager.instance.getEndGameMessage());
-                    }
-                    else {
-                        // Next stage
-                        // Play SFX
-                        Sound.SoundSystem.instance.playTransition();
+                else {
+                    // Continue the game
+                    // Attack the enemy and see if it dies
+                    bool dead = Canvas.Enemy.instance.Attack(skillUsed, comboCounter);
+                    // Load next stage if dead
+                    if (dead) {
+                        if (StageManager.instance.NotifyNextStage()) {
+                            // Play SFX
+                            Sound.SoundSystem.instance.playStageClear();
+                            // Game ended
+                            Canvas.ClearText.instance.DisplayClearText();
+                            Canvas.GameClearDialogBox.instance.EndGame(StageManager.instance.getEndGameMessage());
+                        }
+                        else {
+                            // Next stage
+                            // Reactivate used skill if any
+                            foreach (Canvas.Character character in characters) {
+                                character.ReactivateSkill();
+                            }
+                            // Play SFX
+                            Sound.SoundSystem.instance.playTransition();
+                        }
                     }
                 }
             }

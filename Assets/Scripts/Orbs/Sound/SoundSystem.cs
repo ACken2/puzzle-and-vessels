@@ -55,6 +55,10 @@ namespace Assets.Scripts.Orbs.Sound {
         /// Sound player for StageClearSFX
         /// </summary>
         public AudioSource stageClear;
+        /// <summary>
+        /// Sound player for StageFailedSFX
+        /// </summary>
+        public AudioSource stageFailed;
 
         /// <summary>
         /// Initialize the class
@@ -115,6 +119,14 @@ namespace Assets.Scripts.Orbs.Sound {
         public void playStageClear() {
             bgm.Pause();
             stageClear.Play();
+        }
+
+        /// <summary>
+        /// Play the SFX for stage failed and pause BGM
+        /// </summary>
+        public void playStageFail() {
+            bgm.Pause();
+            stageFailed.Play();
         }
 
     }

@@ -129,7 +129,8 @@ namespace Assets.Scripts.Orbs.Canvas {
         /// <summary>
         /// Call this method whenever a round end to reduce 1 HP and update the color of the health bar and its logo
         /// </summary>
-        public void OnRoundEnded() {
+        /// <returns>Trye if all round has been used and the game should be ended</returns>
+        public bool OnRoundEnded() {
             health -= 1;
             // Update health bar
             healthBar.UpdateBar(health, maxHealth);
@@ -146,6 +147,7 @@ namespace Assets.Scripts.Orbs.Canvas {
                 healthBar.UpdateColor(low);
                 barLogo.color = low;
             }
+            return health <= 0;
         }
 
         /// <summary>
