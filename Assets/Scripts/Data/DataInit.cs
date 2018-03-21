@@ -13,6 +13,7 @@ namespace Assets.Scripts.Data {
         public void Start() {
             Games.LoadGame();
             Skills.LoadSkill();
+            Members.LoadMember();
             Destroy(this);
         }
 
