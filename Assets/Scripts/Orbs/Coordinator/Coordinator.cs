@@ -86,11 +86,11 @@ namespace Assets.Scripts.Orbs.Coordinator {
                     if (StageManager.instance.NotifyNextStage()) {
                         // Play SFX
                         Sound.SoundSystem.instance.playStageClear();
+                        // Block input
+                        dialogActive = true;
                         // Game ended
                         Canvas.ClearText.instance.DisplayClearText();
                         Canvas.GameClearDialogBox.instance.EndGame(StageManager.instance.getEndGameMessage());
-                        // Reset static classes
-                        ResetStatics();
                     }
                     else {
                         // Next stage
@@ -138,6 +138,8 @@ namespace Assets.Scripts.Orbs.Coordinator {
         /// </summary>
         public static void NotifyFadedOut() {
             SceneManager.LoadScene("GameExternal");
+            // Reset static classes
+            ResetStatics();
         }
 
         /// <summary>
