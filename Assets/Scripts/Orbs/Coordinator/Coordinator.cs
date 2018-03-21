@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine.SceneManagement;
 
 namespace Assets.Scripts.Orbs.Coordinator {
@@ -90,6 +89,8 @@ namespace Assets.Scripts.Orbs.Coordinator {
                         // Game ended
                         Canvas.ClearText.instance.DisplayClearText();
                         Canvas.GameClearDialogBox.instance.EndGame(StageManager.instance.getEndGameMessage());
+                        // Reset static classes
+                        ResetStatics();
                     }
                     else {
                         // Next stage
@@ -162,6 +163,28 @@ namespace Assets.Scripts.Orbs.Coordinator {
         /// <returns>List of characters in the scene</returns>
         public static List<Canvas.Character> GetCharacters() {
             return characters;
+        }
+
+        /// <summary>
+        /// Reset all static variable in this classs
+        /// </summary>
+        public static void Reset() {
+            characters.Clear();
+            roundProgressing = false;
+            skillUsedInCurrentRound = false;
+            skillUsed = null;
+            dialogActive = false;
+            comboCounter = 1;
+        }
+
+        /// <summary>
+        /// Reset static classes before scene transition
+        /// </summary>
+        private static void ResetStatics() {
+            Reset();
+            TeamManager.Reset();
+            StageManager.Reset();
+            Core.OrbPanel.Reset();
         }
 
     }

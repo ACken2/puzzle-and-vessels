@@ -88,6 +88,16 @@ namespace Assets.Scripts.Orbs.Coordinator {
         }
 
         /// <summary>
+        /// Reset all static variable in this classs
+        /// </summary>
+        public static void Reset() {
+            gameIndex = 0;
+            instance = null;
+            stageIndex = 0;
+            maxStage = 0;
+        }
+
+        /// <summary>
         /// Triggered after enemy has been faded out and it is ready to transition into the next stage
         /// </summary>
         /// <param name="sender">Object that raises the event</param>

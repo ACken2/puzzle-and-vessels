@@ -133,6 +133,17 @@ namespace Assets.Scripts.Orbs.Core {
         }
 
         /// <summary>
+        /// Reset all static variable in this classs
+        /// </summary>
+        public static void Reset() {
+            orbSwapped = false;
+            orbs = new Orb[5, 6];
+            selectedOrb = null;
+            currentTracker = null;
+            originalSelectedType = -1;
+        }
+
+        /// <summary>
         /// Triggered after AlgoPostDrag has completed
         /// </summary>
         /// <param name="sender">Object that raises the event</param>

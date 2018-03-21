@@ -48,6 +48,13 @@ namespace Assets.Scripts.Orbs.Coordinator {
             //return members;
         }
 
+        /// <summary>
+        /// Reset all static variable in this classs
+        /// </summary>
+        public static void Reset() {
+            members.Clear();
+        }
+
     }
 
 }
