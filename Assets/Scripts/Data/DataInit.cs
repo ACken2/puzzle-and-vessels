@@ -8,12 +8,21 @@ namespace Assets.Scripts.Data {
     public class DataInit : MonoBehaviour {
 
         /// <summary>
+        /// Boolean stating whether the data has already been initialized
+        /// </summary>
+        private static bool initialized = false;
+
+        /// <summary>
         /// Initialize data classes and then self destruct
         /// </summary>
         public void Start() {
-            Games.LoadGame();
-            Skills.LoadSkill();
-            Members.LoadMember();
+            // Initialize if not yet do so
+            if (!initialized) {
+                Games.LoadGame();
+                Skills.LoadSkill();
+                Members.LoadMember();
+                initialized = true;
+            }
             Destroy(this);
         }
 
