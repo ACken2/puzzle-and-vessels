@@ -35,6 +35,10 @@ namespace Assets.Scripts.Orbs.Core {
         /// Store the type of the originally selected Orb
         /// </summary>
         private static int originalSelectedType = -1;
+        /// <summary>
+        /// Boolean storing whether the timer has been activated
+        /// </summary>
+        private static bool timerActivated = false;
 
         /// <summary>
         /// Each Orb instance should register here at Start() method
@@ -73,6 +77,15 @@ namespace Assets.Scripts.Orbs.Core {
         public static void OnDrag(PointerEventData ev) {
             // Check if player movement should be processed
             if (Coordinator.Coordinator.GetOrbMovable()) {
+                // Activate timer if not done so already
+                if (!timerActivated) {
+                    // Attach event listener
+                    Canvas.HealthBar.instance.TimeReached += PostTimerReached;
+                    // Activate timer
+                    Canvas.HealthBar.instance.RequestCountdown();
+                    // Set flag
+                    timerActivated = true;
+                }
                 // Update tracker position
                 Vector3 pointerPos = Camera.main.ScreenToWorldPoint(new Vector3(ev.position.x, ev.position.y, 10));
                 pointerPos.z = trackingZ;
@@ -109,6 +122,9 @@ namespace Assets.Scripts.Orbs.Core {
         public static void OnEndDrag(bool nodrag) {
             // Check if player movement should be processed
             if (Coordinator.Coordinator.GetOrbMovable()) {
+                // Stop the timer (if necessary as deemed by HealthBar)
+                Canvas.HealthBar.instance.StopCountdown();
+                timerActivated = false;
                 // Swap the currently selectedOrb with the type of the initally selected Orb
                 selectedOrb.OnSwap(originalSelectedType);
                 selectedOrb.OnDeselectOrb();
@@ -169,6 +185,16 @@ namespace Assets.Scripts.Orbs.Core {
             trackingObj.transform.position = originalPos;
             trackingObj.transform.localScale = new Vector3(0.48f, 0.48f, 1);
             currentTracker = trackingObj;
+        }
+
+        /// <summary>
+        /// Triggered after TimeReached event is raised
+        /// </summary>
+        /// <param name="sender">Object that raises the event</param>
+        /// <param name="e">Empty event arguments</param>
+        private static void PostTimerReached(object sender, EventArgs e) {
+            // Force drag done
+            OnEndDrag(false);
         }
 
     }
