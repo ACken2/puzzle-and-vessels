@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using UnityEngine;
+using UnityEngine.SceneManagement;
 
 namespace Assets.Scripts.Orbs.Coordinator {
 
@@ -125,8 +125,18 @@ namespace Assets.Scripts.Orbs.Coordinator {
             comboCounter += 1;
         }
 
+        /// <summary>
+        /// Begin fading out the scene to prepare for end game
+        /// </summary>
         public static void NotifyEndGame() {
-            Debug.Log("THE END");
+            Canvas.Fader.instance.FadeOut();
+        }
+
+        /// <summary>
+        /// Triggered when scene is faded out and is ready to be switched back to GameExternal
+        /// </summary>
+        public static void NotifyFadedOut() {
+            SceneManager.LoadScene("GameExternal");
         }
 
         /// <summary>
