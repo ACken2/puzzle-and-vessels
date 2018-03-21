@@ -30,6 +30,10 @@ namespace Assets.Scripts.Orbs.Canvas {
         /// Animator for flashing background when skill become available
         /// </summary>
         private Animator bgAnimator;
+        /// <summary>
+        /// Switchable image for the character sprite
+        /// </summary>
+        private SwitchableImage switchableImage;
 
         /// <summary>
         /// Number of particle to be spawned when a skill is usd
@@ -44,10 +48,26 @@ namespace Assets.Scripts.Orbs.Canvas {
             particle = transform.parent.GetComponent<ParticleSystem>();
             coreAnimator = GetComponent<Animator>();
             bgAnimator = transform.GetChild(0).GetComponentInChildren<Animator>();
+            switchableImage = transform.GetChild(0).GetChild(0).GetComponentInChildren<SwitchableImage>();
             // Register
             Coordinator.Coordinator.RegisterCharacter(this);
             // Start all character with skill ready
             SkillReady();
+        }
+
+        /// <summary>
+        /// Initialize this character sprite and skill
+        /// </summary>
+        /// <param name="uuid">UUID of the character that this instance should represent</param>
+        public void InitSprite(string uuid) {
+            if (uuid != null) {
+                // Switch image to that of the desired sprite if given
+                switchableImage.SwitchImage("Character/" + uuid);
+            }
+            else {
+                // Switch off this instance as we don't need them
+                gameObject.SetActive(false);
+            }
         }
 
         /// <summary>
