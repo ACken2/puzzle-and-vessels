@@ -46,6 +46,11 @@ namespace Assets.Scripts.Orbs.Core {
         private SpriteRenderer sprite;
 
         /// <summary>
+        /// Extended hitbox of this instance when the player begin orb movment
+        /// </summary>
+        private BoxCollider2D[] extendedHitbox;
+
+        /// <summary>
         /// Random instance shared among all Orb via a static reference to prevent re-initializing Random multiple times which mess it up
         /// </summary>
         private static readonly System.Random getrandom = new System.Random();
@@ -66,6 +71,8 @@ namespace Assets.Scripts.Orbs.Core {
             OrbPanel.regOrb(this, row, column);
             // Cache sprite renderer instance
             sprite = GetComponent<SpriteRenderer>();
+            // Cache extended hitbox
+            extendedHitbox = GetComponents<BoxCollider2D>();
             // Randomize orb type
             type = GetRandomNumber(1, 4);
             // Update sprite
@@ -164,6 +171,28 @@ namespace Assets.Scripts.Orbs.Core {
             type = newType;
             // Update sprite to the new type
             updateSprite();
+        }
+
+        /// <summary>
+        /// Activate the extended hitbox if any
+        /// </summary>
+        public void ActivateExtendedHitbox() {
+            if (extendedHitbox != null) {
+                foreach (BoxCollider2D bc2d in extendedHitbox) {
+                    bc2d.enabled = true;
+                }
+            }
+        }
+
+        /// <summary>
+        /// Deactivate the extended hit box if any
+        /// </summary>
+        public void DeactivateExtendedHitbox() {
+            if (extendedHitbox != null) {
+                foreach (BoxCollider2D bc2d in extendedHitbox) {
+                    bc2d.enabled = false;
+                }
+            }
         }
 
         /// <summary>

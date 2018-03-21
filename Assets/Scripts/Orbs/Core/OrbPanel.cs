@@ -60,6 +60,9 @@ namespace Assets.Scripts.Orbs.Core {
                 selectedOrb = orb;
                 originalSelectedType = orb.getType();
                 Coordinator.Coordinator.NotifyRoundStarted();
+                foreach (Orb o in orbs) {
+                    o.ActivateExtendedHitbox();
+                }
             }
         }
 
@@ -75,7 +78,11 @@ namespace Assets.Scripts.Orbs.Core {
                 pointerPos.z = trackingZ;
                 currentTracker.transform.position = pointerPos;
                 // Check if any orbs has to be swapped
-                GameObject raycastedObj = ev.pointerCurrentRaycast.gameObject;
+                // Do a ray cast from the pointer position and try to find a game object
+                RaycastHit2D hit;
+                hit = Physics2D.Raycast(pointerPos, Vector2.zero);
+                // Set raycaster object to be the collider or null (if nothing was raycasted to)
+                GameObject raycastedObj = hit.collider == null ? null : hit.collider.gameObject;
                 if (raycastedObj != null) {
                     Orb newSelectedOrb = raycastedObj.GetComponent<Orb>();
                     if (newSelectedOrb != null && newSelectedOrb != selectedOrb) {
@@ -110,6 +117,10 @@ namespace Assets.Scripts.Orbs.Core {
                 selectedOrb = null;
                 // Destroy the tracker
                 UnityEngine.Object.Destroy(currentTracker);
+                // Deactivate hitbox
+                foreach (Orb o in orbs) {
+                    o.DeactivateExtendedHitbox();
+                }
                 if (!nodrag) {
                     // Initiate AlgoPostDrag and let it handle post-drag events if any dragging occured
                     AlgoPostDrag apd = new AlgoPostDrag(orbs);
