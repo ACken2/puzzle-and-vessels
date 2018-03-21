@@ -146,6 +146,14 @@ namespace Assets.Scripts.Orbs.Coordinator {
             return comboCounter;
         }
 
+        /// <summary>
+        /// Get the character list
+        /// </summary>
+        /// <returns>List of characters in the scene</returns>
+        public static List<Canvas.Character> GetCharacters() {
+            return characters;
+        }
+
     }
 
 }

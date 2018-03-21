@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace Assets.Scripts.Orbs.Coordinator {
@@ -34,6 +35,20 @@ namespace Assets.Scripts.Orbs.Coordinator {
             instance = this;
             // Initialize stage variable
             maxStage = Data.Games.GetMaxStage(gameIndex);
+            // Load character sprite and setting
+            List<Canvas.Character> characters = Coordinator.GetCharacters();
+            characters.Sort((x, y) => x.transform.position.x.CompareTo(y.transform.position.x)); // Sort object from left to right
+            List<string> selectedCharacter = TeamManager.GetMembers();
+            for (int i=0; i<characters.Count; i++) {
+                if (i < selectedCharacter.Count) {
+                    characters[i].InitSprite(selectedCharacter[i]); // Init team member sprite
+                    characters[i].skill = Data.Members.GetSkill(selectedCharacter[i]); // Set the skill of the character
+                }
+                else {
+                    characters[i].InitSprite(null); // Disable unused character
+                }
+            }
+            // Load the stage
             LoadStage();
         }
 
