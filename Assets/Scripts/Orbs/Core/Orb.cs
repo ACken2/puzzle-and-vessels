@@ -28,6 +28,10 @@ namespace Assets.Scripts.Orbs.Core {
         /// Sprite for type 3 orb
         /// </summary>
         public Sprite typeThreeOrb;
+        /// <summary>
+        /// Sprite for type 4 orb
+        /// </summary>
+        public Sprite typeFourOrb;
 
         /// <summary>
         /// Current type of this Orb instance
@@ -77,7 +81,7 @@ namespace Assets.Scripts.Orbs.Core {
             // Cache extended hitbox
             extendedHitbox = GetComponents<BoxCollider2D>();
             // Randomize orb type
-            type = GetRandomNumber(1, 4);
+            type = GetRandomNumber(1, 5);
             // Update sprite
             updateSprite();
         }
@@ -208,8 +212,11 @@ namespace Assets.Scripts.Orbs.Core {
             else if (type == 2) {
                 sprite.sprite = typeTwoOrb;
             }
-            else {
+            else if (type ==3) {
                 sprite.sprite = typeThreeOrb;
+            }
+            else {
+                sprite.sprite = typeFourOrb;
             }
         }
 

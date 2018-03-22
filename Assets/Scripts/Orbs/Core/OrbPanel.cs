@@ -183,7 +183,7 @@ namespace Assets.Scripts.Orbs.Core {
             originalPos.y += 0.1f;
             originalPos.z = trackingZ;
             trackingObj.transform.position = originalPos;
-            trackingObj.transform.localScale = new Vector3(0.48f, 0.48f, 1);
+            trackingObj.transform.localScale = new Vector3(1, 1, 1);
             currentTracker = trackingObj;
         }
 
