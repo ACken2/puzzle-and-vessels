@@ -62,7 +62,6 @@ namespace Assets.Scripts.Orbs.Canvas {
         public void InitEnemy(string spritePath, string[] skillEffective, int minCombo) {
             if (spritePath == "Enemy/ae03f6d8-6ec8-4ec8-8002-9f5cea909e27") {
                 // Special processing code for this special enemy which has 4 possible type
-                Core.Orb.GetRandomNumber(1, 5); // Fixed identical output of 2
                 int randomType = Core.Orb.GetRandomNumber(1, 5);
                 spritePath += "_" + randomType.ToString();
                 minimumCombo = randomType;

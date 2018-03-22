@@ -229,6 +229,7 @@ namespace Assets.Scripts.Orbs.Core {
         public static int GetRandomNumber(int min, int max) {
             lock (getrandom) // synchronize
             {
+                getrandom.Next(min, max);
                 return getrandom.Next(min, max);
             }
         }
