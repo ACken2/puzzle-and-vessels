@@ -39,6 +39,10 @@ namespace Assets.Scripts.Orbs.Canvas {
         /// Minimum combo required to defeat this enemy
         /// </summary>
         private int minimumCombo;
+        /// <summary>
+        /// Skill that can defeat everything
+        /// </summary>
+        private readonly string debugSkill = "c1bd09cd-1e8c-4e63-92c0-358d71bd9b8d";
 
         /// <summary>
         /// Initialize references
@@ -56,9 +60,19 @@ namespace Assets.Scripts.Orbs.Canvas {
         /// <param name="skillEffective">Array of skill ID that would be effective in killing this enemy</param>
         /// <param name="minCombo">Minimum combo required to kill this enemy</param>
         public void InitEnemy(string spritePath, string[] skillEffective, int minCombo) {
+            if (spritePath == "Enemy/ae03f6d8-6ec8-4ec8-8002-9f5cea909e27") {
+                // Special processing code for this special enemy which has 4 possible type
+                Core.Orb.GetRandomNumber(1, 5); // Fixed identical output of 2
+                int randomType = Core.Orb.GetRandomNumber(1, 5);
+                spritePath += "_" + randomType.ToString();
+                minimumCombo = randomType;
+            }
+            else {
+                // Load normally
+                minimumCombo = minCombo;
+            }
             switchImage.SwitchImage(spritePath);
             acceptedSkill = (string[]) skillEffective.Clone();
-            minimumCombo = minCombo;
             shieldText.transform.parent.gameObject.SetActive(true);
             shieldText.text = minimumCombo.ToString();
         }
@@ -70,7 +84,7 @@ namespace Assets.Scripts.Orbs.Canvas {
         /// <param name="combo">Number of combo used against the enemy</param>
         /// <returns>Boolean stating whether the enemy is killed</returns>
         public bool Attack(string skillUsed, int combo) {
-            if (acceptedSkill.Contains(skillUsed) && combo >= minimumCombo) {
+            if ((acceptedSkill.Contains(skillUsed) || skillUsed == debugSkill) && combo >= minimumCombo) {
                 return true;
             }
             else {
