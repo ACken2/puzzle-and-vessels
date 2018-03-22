@@ -32,6 +32,10 @@ namespace Assets.Scripts.Orbs.Coordinator {
         /// Counter for the number of Combo to this instance
         /// </summary>
         private static int comboCounter = 1;
+        /// <summary>
+        /// Maximum number of game completed before going to credit
+        /// </summary>
+        private static int maxGame = 2;
 
         /// <summary>
         /// All Character instance should call this method to register in the Coordinator
@@ -158,8 +162,14 @@ namespace Assets.Scripts.Orbs.Coordinator {
         public static void NotifyFadedOut() {
             // Set new currentProgress in LoadButton Master
             External.GameSelection.LoadButtonMaster.currentProgress = StageManager.gameIndex + 1;
-            // Return to game screen
-            SceneManager.LoadScene("GameExternal");
+            if (External.GameSelection.LoadButtonMaster.currentProgress > maxGame) {
+                // Load credit if the game has ended
+                SceneManager.LoadScene("Credits");
+            }
+            else {
+                // Return to game screen
+                SceneManager.LoadScene("GameExternal");
+            }
             // Reset static classes
             ResetStatics();
         }
