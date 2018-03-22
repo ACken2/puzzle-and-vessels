@@ -1,23 +1,101 @@
 ﻿{
     "games": [
         {
-            "gameName": "TESTING GAME",
-            "maxAllowedTurn": 5,
-            "endGameMessage": "Thank you for trying out the demo",
+            "gameName": "右大腿動脈(みぎだいたいどうみゃく)",
+            "maxAllowedTurn": 8,
+            "endGameMessage": "師弟去Tea啦！",
             "stages": [
                 {
-                    "spriteId": "MISSING_NO",
+                    "spriteId": "a1b53006-d693-4112-93cd-4c1b8a42821f",
                     "effectiveSkill": [
-                        "c1bd09cd-1e8c-4e63-92c0-358d71bd9b8d"
+                        "dcdcd062-9b61-413e-894d-560e0a15d949"
+                    ],
+                    "combo": 2
+                },
+                {
+                    "spriteId": "429b659d-209a-42fb-bda7-c2b4dfbb04d6",
+                    "effectiveSkill": [
+                        "024dcdc1-07f1-406a-afeb-99b73e79a569"
+                    ],
+                    "combo": 2
+                },
+                {
+                    "spriteId": "17f29044-edf4-4f04-8458-155e3931b65b",
+                    "effectiveSkill": [
+                        "4a87a6aa-8672-4d0c-bbba-dcf8a9d8b466"
+                    ],
+                    "combo": 3
+                },
+                {
+                    "spriteId": "d2946592-ddb1-4257-b4cd-9de5ed1d761f",
+                    "effectiveSkill": [
+                        "337e52f3-27b1-41f9-8c8f-56fe6d2e2249"
+                    ],
+                    "combo": 4
+                }
+            ]
+        },
+        {
+            "gameName": "大動脈(だいどうみゃく)",
+            "maxAllowedTurn": 6,
+            "endGameMessage": "師弟食早食晏啊?",
+            "stages": [
+                {
+                    "spriteId": "0866f3ff-db86-4c4a-9ca2-a1631c528d54",
+                    "effectiveSkill": [
+                        "56908682-8af8-4232-9082-d58c0da28f18"
+                    ],
+                    "combo": 2
+                },
+                {
+                    "spriteId": "01ce369b-e9ea-4b0d-a2f9-03e24a0146ec",
+                    "effectiveSkill": [
+                        "56908682-8af8-4232-9082-d58c0da28f18"
+                    ],
+                    "combo": 3
+                },
+                {
+                    "spriteId": "80f6bec3-f72d-47ed-af18-d40e6a1dd0f8",
+                    "effectiveSkill": [
+                        "a0778a23-f649-4f15-82a3-791eaf2eeb73"
+                    ],
+                    "combo": 5
+                }
+            ]
+        },
+        {
+            "gameName": "気管支動脈(きかんしどうみゃく)",
+            "maxAllowedTurn": 8,
+            "endGameMessage": "師弟夠鐘放工啦！",
+            "stages": [
+                {
+                    "spriteId": "ae03f6d8-6ec8-4ec8-8002-9f5cea909e27",
+                    "effectiveSkill": [
+                        "086eb78e-8608-42b0-b96f-5f09dd1be0f6"
+                    ],
+                    "combo": 4
+                },
+                {
+                    "spriteId": "16228f7d-6441-4d07-b75b-d9a6bc136321",
+                    "effectiveSkill": [
+                        "a0778a23-f649-4f15-82a3-791eaf2eeb73"
                     ],
                     "combo": 5
                 },
                 {
-                    "spriteId": "MISSING_NO",
+                    "spriteId": "9c42a506-0a51-4fee-9096-3892a9f25dd4",
                     "effectiveSkill": [
-                        "c1bd09cd-1e8c-4e63-92c0-358d71bd9b8d"
+                        "cafd3591-a386-42fb-847d-b844ebf2166b"
                     ],
-                    "combo":  10
+                    "combo": 5
+                },
+                {
+                    "spriteId": "e75169ce-6b06-4815-bcbc-a3cec3baed12",
+                    "effectiveSkill": [
+                        "758558dd-26a7-4335-a3e2-4e7aae713f2f",
+                        "791cb54b-78fa-452c-90b5-b91e1c2e2a87"
+                    ],
+                    "combo": 6
                 }
             ]
         }

@@ -1,10 +1,108 @@
-{
+﻿{
     "skills": [
         {
             "uuid": "c1bd09cd-1e8c-4e63-92c0-358d71bd9b8d",
             "skill": {
                 "title": "MISSING SKILL",
-                "description": "Oops, it looks like the game has bug out...."
+                "description": "An overpowered debug skill"
+            }
+        },
+        {
+            "uuid": "dcdcd062-9b61-413e-894d-560e0a15d949",
+            "skill": {
+                "title": "SELDINGER PUNCTURE!!",
+                "description": "Intact Vessel-mon の防御力を0する"
+            }
+        },
+        {
+            "uuid": "086eb78e-8608-42b0-b96f-5f09dd1be0f6",
+            "skill": {
+                "title": "SELECTIVE ACCESS!!",
+                "description": "Bronchial Artery Bros の防御力を0する"
+            }
+        },
+        {
+            "uuid": "daeb6d66-d3a7-4543-80f3-81d54fa5293f",
+            "skill": {
+                "title": "SELECTIVE ACCESS!",
+                "description": "Renal twins の防御力を0する"
+            }
+        },
+        {
+            "uuid": "cafd3591-a386-42fb-847d-b844ebf2166b",
+            "skill": {
+                "title": "FINAL ACCESS!!!",
+                "description": "Branches Octopus の防御力を0する"
+            }
+        },
+        {
+            "uuid": "337e52f3-27b1-41f9-8c8f-56fe6d2e2249",
+            "skill": {
+                "title": "SCARED CLEAR!!",
+                "description": "Blood Clot-mon の防御力を0する"
+            }
+        },
+        {
+            "uuid": "56908682-8af8-4232-9082-d58c0da28f18",
+            "skill": {
+                "title": "FULL BURST!!",
+                "description": "Muscular Vessel Solider の防御力を0する"
+            }
+        },
+        {
+            "uuid": "4a87a6aa-8672-4d0c-bbba-dcf8a9d8b466",
+            "skill": {
+                "title": "STRENGTH ENHANCE!!",
+                "description": "Wire-linked Vessel-mon の防御力を0する"
+            }
+        },
+        {
+            "uuid": "024dcdc1-07f1-406a-afeb-99b73e79a569",
+            "skill": {
+                "title": "FUTURE GUIDANCE!!",
+                "description": "Punctured Vessel-mon の防御力を0する"
+            }
+        },
+        {
+            "uuid": "758558dd-26a7-4335-a3e2-4e7aae713f2f",
+            "skill": {
+                "title": "ETERNAL SEAL!!!",
+                "description": "Bloody Haemodragon の防御力を0する"
+            }
+        },
+        {
+            "uuid": "791cb54b-78fa-452c-90b5-b91e1c2e2a87",
+            "skill": {
+                "title": "NO ENTRY!!!",
+                "description": "Bloody Haemodragon の防御力を0する"
+            }
+        },
+        {
+            "uuid": "e265bdf9-6321-4a4a-9540-b6b4134df860",
+            "skill": {
+                "title": "TEMPUS SEAL!",
+                "description": "Hepatic Bomber の防御力を0する"
+            }
+        },
+        {
+            "uuid": "a6880849-5159-488e-a01c-c5c1875ef68b",
+            "skill": {
+                "title": "SHINY STAR!",
+                "description": "Arch Master と Guardian of Invisible Maze の防御力を0する"
+            }
+        },
+        {
+            "uuid": "a0778a23-f649-4f15-82a3-791eaf2eeb73",
+            "skill": {
+                "title": "STARLIGHT ROAD!!",
+                "description": "Arch Master と Guardian of Invisible Maze の防御力を0する"
+            }
+        },
+        {
+            "uuid": "85ea6797-f2bd-4082-b9f3-fdbc9b9e2ec6",
+            "skill": {
+                "title": "Time Out!!!!!!!!!!!!!",
+                "description": "1ターンの間、ドロップ操作時間を延長"
             }
         }
     ]
