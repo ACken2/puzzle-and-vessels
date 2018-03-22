@@ -84,7 +84,7 @@ namespace Assets.Scripts.Orbs.Canvas {
         /// <param name="combo">Number of combo used against the enemy</param>
         /// <returns>Boolean stating whether the enemy is killed</returns>
         public bool Attack(string skillUsed, int combo) {
-            if ((acceptedSkill.Contains(skillUsed) || skillUsed == debugSkill) && combo >= minimumCombo) {
+            if ((acceptedSkill.Contains(skillUsed) || skillUsed == debugSkill) && combo > minimumCombo) {
                 return true;
             }
             else {
