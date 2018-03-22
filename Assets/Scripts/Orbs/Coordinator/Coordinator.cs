@@ -156,6 +156,9 @@ namespace Assets.Scripts.Orbs.Coordinator {
         /// Triggered when scene is faded out and is ready to be switched back to GameExternal
         /// </summary>
         public static void NotifyFadedOut() {
+            // Set new currentProgress in LoadButton Master
+            External.GameSelection.LoadButtonMaster.currentProgress = StageManager.gameIndex + 1;
+            // Return to game screen
             SceneManager.LoadScene("GameExternal");
             // Reset static classes
             ResetStatics();
