@@ -29,7 +29,7 @@ namespace Assets.Scripts.Orbs.Core {
         /// <summary>
         /// Changes in opacity per update during the fade out animation
         /// </summary>
-        private Color fadePerUpdate = new Color(0, 0, 0, 0.05f);
+        private Color fadePerUpdate = new Color(0, 0, 0, 0.1f);
 
         /// <summary>
         /// Store the Vector3 for the target destination of the translation animation
@@ -38,7 +38,11 @@ namespace Assets.Scripts.Orbs.Core {
         /// <summary>
         /// Magnitude of translation per update
         /// </summary>
-        private Vector3 translatePerUpdate = new Vector3(0, -0.05f, 0);
+        private Vector3 translatePerUpdate;
+        /// <summary>
+        /// Number of frame that the translate animation shoule take
+        /// </summary>
+        private float translateConstant = 18f;
 
         /// <summary>
         /// Static method for building a DummyOrb instance
@@ -98,6 +102,7 @@ namespace Assets.Scripts.Orbs.Core {
         /// <param name="destination">Destination position the DummyOrb should travel to</param>
         public void StartTranslate(Vector3 destination) {
             translateDest = destination;
+            translatePerUpdate = (translateDest - transform.position) / 20f;
         }
 
         /// <summary>

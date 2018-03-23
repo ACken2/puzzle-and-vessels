@@ -21,6 +21,14 @@ namespace Assets.Scripts.Orbs.Core {
         /// List of DummyOrb spawned with no animation
         /// </summary>
         private List<DummyOrb> staticDummyOrbs = new List<DummyOrb>();
+        /// <summary>
+        /// Number of animation waiting to be completed
+        /// </summary>
+        private int pendingAnimation = 0;
+        /// <summary>
+        /// Number of animation already done
+        /// </summary>
+        private int animationDone = 0;
 
         /// <summary>
         /// Initiate a rearrangement of Orb where some or all Orb are eliminated
@@ -50,6 +58,10 @@ namespace Assets.Scripts.Orbs.Core {
                                 DummyOrb d = DummyOrb.Factory(unarranged[k, i].transform.position, unarranged[k, i].GetComponent<SpriteRenderer>().sprite, unarranged[k, i].transform.localScale);
                                 d.StartTranslate(orb.transform.position);
                                 dummyOrbs.Add(d);
+                                // Listen to AnimationDone
+                                d.AnimationDone += animationCallback;
+                                // Increment counter
+                                pendingAnimation++;
                                 // We are done with this orb
                                 break;
                             }
@@ -61,7 +73,7 @@ namespace Assets.Scripts.Orbs.Core {
                             // Loop through all Orbs above this Orb
                             for (int k=j; k>=0; k--) {
                                 // Set the current Orb and every Orb above this Orb to a random type
-                                int newType = Orb.GetRandomNumber(1, 4);
+                                int newType = Orb.GetRandomNumber(1, 5);
                                 unarranged[k, i].setType(newType);
                                 // Spawn a DummyOrb that translate to the position for that animation
                                 // Calculate the Orb position, it should be just above the Orb itself seperated by the distance between each normal Orb
@@ -71,6 +83,10 @@ namespace Assets.Scripts.Orbs.Core {
                                 DummyOrb d = DummyOrb.Factory(dummyOrbPos, unarranged[k, i].GetComponent<SpriteRenderer>().sprite, unarranged[k, i].transform.localScale);
                                 d.StartTranslate(unarranged[k, i].transform.position);
                                 dummyOrbs.Add(d);
+                                // Listen to AnimationDone
+                                d.AnimationDone += animationCallback;
+                                // Increment counter
+                                pendingAnimation++;
                             }
                             // We are done with the entire column at this point, no point to run this loop any further since all Orb within this column is set
                             break;
@@ -83,9 +99,6 @@ namespace Assets.Scripts.Orbs.Core {
                     }
                 }
             }
-            // Listen to OnAnimaionDone on the the LAST dummyOrb object
-            // Since all animation should be completed at the same time, and the event is triggered last for the last dummyOrb object, we are just listening to that object
-            dummyOrbs[dummyOrbs.Count - 1].AnimationDone += animationCallback;
         }
 
         /// <summary>
@@ -94,16 +107,19 @@ namespace Assets.Scripts.Orbs.Core {
         /// <param name="sender">Object that raises the event</param>
         /// <param name="e">Empty event arguments</param>
         private void animationCallback(object sender, EventArgs e) {
-            // Destroy Animated DummyOrb
-            for (int i=0; i<dummyOrbs.Count; i++) {
-                UnityEngine.Object.Destroy(dummyOrbs[i].gameObject);
+            animationDone++;
+            if (animationDone >= pendingAnimation) {
+                // Destroy Animated DummyOrb
+                for (int i = 0; i < dummyOrbs.Count; i++) {
+                    UnityEngine.Object.Destroy(dummyOrbs[i].gameObject);
+                }
+                // Destroy Static DummyOrb
+                for (int i = 0; i < staticDummyOrbs.Count; i++) {
+                    UnityEngine.Object.Destroy(staticDummyOrbs[i].gameObject);
+                }
+                // Raise RearrangementCompleted event
+                OnRearrangementCompleted(EventArgs.Empty);
             }
-            // Destroy Static DummyOrb
-            for (int i=0; i<staticDummyOrbs.Count; i++) {
-                UnityEngine.Object.Destroy(staticDummyOrbs[i].gameObject);
-            }
-            // Raise RearrangementCompleted event
-            OnRearrangementCompleted(EventArgs.Empty);
         }
 
         /// <summary>
