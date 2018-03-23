@@ -29,7 +29,7 @@ namespace Assets.Scripts.Orbs.Core {
         /// <summary>
         /// Changes in opacity per update during the fade out animation
         /// </summary>
-        private Color fadePerUpdate = new Color(0, 0, 0, 0.1f);
+        private Color fadePerUpdate = new Color(0, 0, 0, 0.05f);
 
         /// <summary>
         /// Store the Vector3 for the target destination of the translation animation
