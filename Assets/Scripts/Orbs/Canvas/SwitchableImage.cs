@@ -25,6 +25,10 @@ namespace Assets.Scripts.Orbs.Canvas {
         /// </summary>
         /// <param name="spritePath">File path to the desired sprite</param>
         public void SwitchImage(string spritePath) {
+            // Fix Start() may occasionally be skipped and image is not initialized
+            if (image == null) {
+                image = GetComponent<Image>();
+            }
             Sprite loadedSprite = Resources.Load<Sprite>(spritePath);
             if (loadedSprite != null) {
                 image.sprite = loadedSprite;
