@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using UnityEngine;
 using UnityEngine.SceneManagement;
 
 namespace Assets.Scripts.External.MemberSelection {
@@ -19,8 +20,25 @@ namespace Assets.Scripts.External.MemberSelection {
                 Common.SoundSystem.instance.PlayTapSFX();
                 // Fade the scene out
                 Common.Fader.instance.FadeOut();
-                // Moved to the next game core scene, and ask it to load as soon as possible
-                SceneManager.LoadSceneAsync("GameCore").allowSceneActivation = true;
+                // Load scene async
+                StartCoroutine(LoadGameCore());
+            }
+            else {
+                // Play SFX
+                Common.SoundSystem.instance.PlayTapErrorSFX();
+            }
+        }
+
+        /// <summary>
+        /// Load GameCore in async manner
+        /// </summary>
+        /// <returns>Null when the scene is loaded</returns>
+        IEnumerator LoadGameCore() {
+            // Loads the Scene GameCore in the background at the same time as the current Scene.
+            AsyncOperation asyncLoad = SceneManager.LoadSceneAsync("GameCore");
+            //Wait until the last operation fully loads to return anything
+            while (!asyncLoad.isDone) {
+                yield return null;
             }
         }
 
