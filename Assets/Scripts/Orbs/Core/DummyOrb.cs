@@ -38,7 +38,7 @@ namespace Assets.Scripts.Orbs.Core {
         /// <summary>
         /// Magnitude of translation per update
         /// </summary>
-        private Vector3 translatePerUpdate = new Vector3(0, -0.1f, 0);
+        private Vector3 translatePerUpdate = new Vector3(0, -0.05f, 0);
 
         /// <summary>
         /// Static method for building a DummyOrb instance
