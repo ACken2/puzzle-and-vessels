@@ -19,7 +19,6 @@ namespace Assets.Scripts.Data {
             // Initialize if not yet do so
             if (!initialized) {
                 Games.LoadGame();
-                Skills.LoadSkill();
                 Members.LoadMember();
                 initialized = true;
             }
