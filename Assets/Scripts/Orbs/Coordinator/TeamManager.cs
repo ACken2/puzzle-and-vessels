@@ -42,10 +42,7 @@ namespace Assets.Scripts.Orbs.Coordinator {
         /// </summary>
         /// <returns>List of string that detail the currently selected member</returns>
         public static List<string> GetMembers() {
-            List<string> members = new List<string>();
-            members.Add("ce42489e-2b75-472e-be02-5a8e4b4747d5");
             return members;
-            //return members;
         }
 
         /// <summary>
