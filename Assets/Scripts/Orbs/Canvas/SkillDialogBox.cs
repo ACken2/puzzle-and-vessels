@@ -1,6 +1,5 @@
 ﻿using System;
 using UnityEngine;
-using UnityEngine.UI;
 
 namespace Assets.Scripts.Orbs.Canvas {
 
@@ -24,13 +23,9 @@ namespace Assets.Scripts.Orbs.Canvas {
         /// </summary>
         private GameObject core;
         /// <summary>
-        /// Text component of the Title
+        /// Image component of the Description
         /// </summary>
-        private Text title;
-        /// <summary>
-        /// Text component of the Description
-        /// </summary>
-        private Text description;
+        private SwitchableImage description;
 
         /// <summary>
         /// Initialize this class
@@ -39,8 +34,7 @@ namespace Assets.Scripts.Orbs.Canvas {
             // Setup references
             instance = this;
             core = transform.GetChild(0).gameObject;
-            title = core.GetComponentsInChildren<Text>()[0];
-            description = core.GetComponentsInChildren<Text>()[1];
+            description = core.GetComponentInChildren<SwitchableImage>();
         }
 
         /// <summary>
@@ -50,11 +44,9 @@ namespace Assets.Scripts.Orbs.Canvas {
         public void displaySkill(string uuid) {
             // Notify the dialog is now active
             Coordinator.Coordinator.NotifyDialogActive();
-            // Show the dialog box
+            // Show the dialog box with the switched image
             core.SetActive(true);
-            Data.SkillCore skill = Data.Skills.GetSkill(uuid);
-            title.text = skill.title;
-            description.text = skill.description;
+            description.SwitchImage("SkillDescription/" + uuid);
         }
 
         /// <summary>
