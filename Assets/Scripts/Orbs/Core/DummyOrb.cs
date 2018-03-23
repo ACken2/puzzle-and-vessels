@@ -102,7 +102,7 @@ namespace Assets.Scripts.Orbs.Core {
         /// <param name="destination">Destination position the DummyOrb should travel to</param>
         public void StartTranslate(Vector3 destination) {
             translateDest = destination;
-            translatePerUpdate = (translateDest - transform.position) / 20f;
+            translatePerUpdate = (translateDest - transform.position) / translateConstant;
         }
 
         /// <summary>
