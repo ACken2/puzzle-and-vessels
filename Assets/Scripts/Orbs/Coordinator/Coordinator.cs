@@ -36,6 +36,10 @@ namespace Assets.Scripts.Orbs.Coordinator {
         /// Maximum number of game completed before going to credit
         /// </summary>
         private static int maxGame = 2;
+        /// <summary>
+        /// Boolean storing whether the player has lost
+        /// </summary>
+        private static bool playerLost = false;
 
         /// <summary>
         /// All Character instance should call this method to register in the Coordinator
@@ -83,6 +87,7 @@ namespace Assets.Scripts.Orbs.Coordinator {
                 // Check if all round are depleted
                 if (roundDepleted) {
                     // Player Lost
+                    playerLost = true;
                     // Animate Orb falldown
                     Canvas.OrbPanel.instance.PlayFailAnimation();
                     // Play SFX
@@ -160,8 +165,10 @@ namespace Assets.Scripts.Orbs.Coordinator {
         /// Triggered when scene is faded out and is ready to be switched back to GameExternal
         /// </summary>
         public static void NotifyFadedOut() {
-            // Set new currentProgress in LoadButton Master
-            External.GameSelection.LoadButtonMaster.currentProgress = StageManager.gameIndex + 1;
+            // Set new currentProgress in LoadButton Master if player haven't lose
+            if (!playerLost) {
+                External.GameSelection.LoadButtonMaster.currentProgress = StageManager.gameIndex + 1;
+            }
             if (External.GameSelection.LoadButtonMaster.currentProgress > maxGame) {
                 // Load credit if the game has ended
                 SceneManager.LoadScene("Credits");
@@ -209,6 +216,7 @@ namespace Assets.Scripts.Orbs.Coordinator {
             skillUsed = null;
             dialogActive = false;
             comboCounter = 1;
+            playerLost = false;
         }
 
         /// <summary>
