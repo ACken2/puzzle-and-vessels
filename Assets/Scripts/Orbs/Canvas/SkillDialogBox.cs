@@ -53,6 +53,8 @@ namespace Assets.Scripts.Orbs.Canvas {
         /// OnClick for the confirm button
         /// </summary>
         public void OnConfirm() {
+            // Play SFX
+            Sound.SoundSystem.instance.PlayTapSFX();
             // Deactivate the Core object
             core.SetActive(false);
             // Raise Event ConfirmSkill
@@ -67,6 +69,8 @@ namespace Assets.Scripts.Orbs.Canvas {
         /// OnClick for the cancel button
         /// </summary>
         public void OnCancel() {
+            // Play SFX
+            Sound.SoundSystem.instance.PlayTapBackSFX();
             // Deactivate the Core object
             core.SetActive(false);
             // Reset event listener

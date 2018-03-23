@@ -63,6 +63,18 @@ namespace Assets.Scripts.Orbs.Sound {
         /// Sound player for movement timeout
         /// </summary>
         public AudioSource movementTimeout;
+        /// <summary>
+        /// Audio source for tap SFX
+        /// </summary>
+        public AudioSource tap;
+        /// <summary>
+        /// Audio source for tap back SFX
+        /// </summary>
+        public AudioSource tapBack;
+        /// <summary>
+        /// Audio source for tap error
+        /// </summary>
+        public AudioSource tapError;
 
         /// <summary>
         /// Initialize the class
@@ -138,6 +150,27 @@ namespace Assets.Scripts.Orbs.Sound {
         /// </summary>
         public void playMovementTimeout() {
             movementTimeout.Play();
+        }
+
+        /// <summary>
+        /// Play the tap SFX
+        /// </summary>
+        public void PlayTapSFX() {
+            tap.Play();
+        }
+
+        /// <summary>
+        /// Play the tap back SFX
+        /// </summary>
+        public void PlayTapBackSFX() {
+            tapBack.Play();
+        }
+
+        /// <summary>
+        /// Play the error SFX
+        /// </summary>
+        public void PlayTapErrorSFX() {
+            tapError.Play();
         }
 
     }

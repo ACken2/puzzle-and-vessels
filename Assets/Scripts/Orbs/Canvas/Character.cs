@@ -76,8 +76,15 @@ namespace Assets.Scripts.Orbs.Canvas {
         public void OnMouseUpAsButton() {
             // Check if skill is ready to be used, and if Coordinator allow us to use skill
             if (skillReady && Coordinator.Coordinator.RequestSkillsActivation()) {
+                // Play SFX
+                Sound.SoundSystem.instance.PlayTapSFX();
+                // Register with ConfirmSkill event
                 SkillDialogBox.instance.ConfirmSkill += SkillActivate;
                 SkillDialogBox.instance.displaySkill(skill);
+            }
+            else {
+                // Play SFX
+                Sound.SoundSystem.instance.PlayTapErrorSFX();
             }
         }
 
