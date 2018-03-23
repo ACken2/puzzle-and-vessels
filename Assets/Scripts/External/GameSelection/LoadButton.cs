@@ -14,15 +14,25 @@ namespace Assets.Scripts.External.GameSelection {
         public int gameIndex = 0;
 
         /// <summary>
+        /// GameObject for selecting game
+        /// </summary>
+        public GameObject gameSelect;
+        /// <summary>
+        /// GameObject for selecting member
+        /// </summary>
+        public GameObject memberSelect;
+
+        /// <summary>
         /// Function triggered when the button is clicked
         /// </summary>
-        public void OnClick() {
+        public void OnMouseUp() {
+            // Play SFX
+            Common.SoundSystem.instance.PlayTapSFX();
             // Set game index to be loaded
             Orbs.Coordinator.StageManager.gameIndex = gameIndex;
-            // Fade the scene out
-            Common.Fader.instance.FadeOut();
-            // Moved to the next game core scene, and ask it to load as soon as possible
-            SceneManager.LoadSceneAsync("GameCore").allowSceneActivation = true;
+            // Show member selection object and hide game select object
+            memberSelect.SetActive(true);
+            gameSelect.SetActive(false);
         }
 
     }
