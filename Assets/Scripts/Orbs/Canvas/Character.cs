@@ -39,6 +39,10 @@ namespace Assets.Scripts.Orbs.Canvas {
         /// Number of particle to be spawned when a skill is usd
         /// </summary>
         private readonly int numParticle = 15;
+        /// <summary>
+        /// UUID of a special skill that prolong movement to 12 seconds
+        /// </summary>
+        private readonly string christopherSkill = "85ea6797-f2bd-4082-b9f3-fdbc9b9e2ec6";
 
         /// <summary>
         /// Initialize the instance
@@ -75,7 +79,8 @@ namespace Assets.Scripts.Orbs.Canvas {
         /// </summary>
         public void OnMouseUpAsButton() {
             // Check if skill is ready to be used, and if Coordinator allow us to use skill
-            if (skillReady && Coordinator.Coordinator.RequestSkillsActivation()) {
+            // Special skill can bypass the limitation
+            if (skillReady && (Coordinator.Coordinator.RequestSkillsActivation() || skill == christopherSkill)) {
                 // Play SFX
                 Sound.SoundSystem.instance.PlayTapSFX();
                 // Register with ConfirmSkill event
@@ -92,7 +97,8 @@ namespace Assets.Scripts.Orbs.Canvas {
         /// Called on every end turn to try to reactivate the skill of this character
         /// </summary>
         public void ReactivateSkill() {
-            if (!skillReady) {
+            // No reactivation if the skill is a special skill
+            if (!skillReady && skill != christopherSkill) {
                 SkillReady();
             }
         }
@@ -131,8 +137,14 @@ namespace Assets.Scripts.Orbs.Canvas {
                 // Spawn 1 particle
                 particle.Emit(param, 1);
             }
-            // Notify skill activation to Coordinator
-            Coordinator.Coordinator.NotifySkillsActivation(skill);
+            if (skill != christopherSkill) {
+                // Notify skill activation to Coordinator
+                Coordinator.Coordinator.NotifySkillsActivation(skill);
+            }
+            else {
+                // Prolong next movement time to 12 seconds
+                HealthBar.instance.RequestProlong();
+            }
             // Set skill ready to false
             skillReady = false;
             // Play the SFX

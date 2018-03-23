@@ -43,6 +43,10 @@ namespace Assets.Scripts.Orbs.Canvas {
         /// Time elapsed since the countdown begin
         /// </summary>
         private float timeElapsed = 0;
+        /// <summary>
+        /// Boolean tracking if prolong time skill is activated
+        /// </summary>
+        private bool timeSkillActivated = false;
 
         /// <summary>
         /// Health Bar Color for upper 1/3 of health
@@ -60,6 +64,10 @@ namespace Assets.Scripts.Orbs.Canvas {
         /// Maximum time allowed in timer mode (4 seconds for movement)
         /// </summary>
         private readonly float maxTime = 4;
+        /// <summary>
+        /// Maximum time allowed in timer mode but with skill activated (12 seconds for movement)
+        /// </summary>
+        private readonly float maxTimeSkill = 24;
 
         /// <summary>
         /// Initiailize the health bar to the set maxHealth
@@ -82,21 +90,35 @@ namespace Assets.Scripts.Orbs.Canvas {
             if (timerMode) {
                 // Elapse time if in timer mode
                 timeElapsed += Time.deltaTime;
-                if (timeElapsed <= maxTime) {
+                if ((!timeSkillActivated && timeElapsed <= maxTime) || (timeSkillActivated && timeElapsed <= maxTimeSkill)) {
                     // Update timer if not reach maximum yet
-                    healthBar.UpdateBar(maxTime - timeElapsed, maxTime);
+                    if (timeSkillActivated) {
+                        healthBar.UpdateBar(maxTimeSkill - timeElapsed, maxTimeSkill);
+                    }
+                    else {
+                        healthBar.UpdateBar(maxTime - timeElapsed, maxTime);
+                    }
                 }
                 else {
                     // Maximum allowed time reached
                     // Disable timer mode and restore health bar
                     timerMode = false;
                     healthBar.UpdateBar(health, maxHealth);
+                    // Disable prolong timer mode
+                    timeSkillActivated = false;
                     // Restore the text
                     healthBar.UpdateTextColor(Color.white);
                     // Raise TimeReached event
                     OnTimeReached(EventArgs.Empty);
                 }
             }
+        }
+
+        /// <summary>
+        /// Request the next movement to have prolonged movement time to 12 seconds
+        /// </summary>
+        public void RequestProlong() {
+            timeSkillActivated = true;
         }
 
         /// <summary>
@@ -117,6 +139,8 @@ namespace Assets.Scripts.Orbs.Canvas {
         /// </summary>
         public void StopCountdown() {
             if (timerMode) {
+                // Disable prolong timer mode
+                timeSkillActivated = false;
                 // Shutdown timer mode and restore health bar if timerMode is activated
                 timerMode = false;
                 healthBar.UpdateBar(health, maxHealth);
