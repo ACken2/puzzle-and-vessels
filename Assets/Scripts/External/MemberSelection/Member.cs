@@ -41,6 +41,8 @@ namespace Assets.Scripts.External.MemberSelection {
         public void Update() {
             // Check if OnMouseDown is called and 1s has elapsed since then without OnMouseUp
             if (mouseDownTime != -1 && Time.time - mouseDownTime >= 1) {
+                // Play SFX
+                Common.SoundSystem.instance.PlayTapSFX();
                 // Long-pressed detected, show description
                 MemberDescription.instance.ShowDescription(memberUUID);
                 // Reset mouseDownTime

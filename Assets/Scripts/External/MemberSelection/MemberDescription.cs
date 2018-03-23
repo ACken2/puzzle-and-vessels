@@ -50,6 +50,8 @@ namespace Assets.Scripts.External.MemberSelection {
         /// Triggered when the description image is clicked on, which return to the member selection screen
         /// </summary>
         public void OnMouseUp() {
+            // Play SFX
+            Common.SoundSystem.instance.PlayTapBackSFX();
             core.SetActive(false);
             bc2d.enabled = false; // Disable box collider once we are done
         }
