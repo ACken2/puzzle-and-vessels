@@ -78,6 +78,11 @@ namespace Assets.Scripts.Orbs.Coordinator {
                 // Animate enemy fading out
                 Canvas.Enemy.instance.animationEvent.AnimationCompleted += LoadStagePre;
                 Canvas.Enemy.instance.FadeOut();
+                // Check final stage
+                if (stageIndex == maxStage - 1) {
+                    // If yes, then play BGM
+                    Sound.SoundSystem.instance.PlayBossBGM();
+                }
                 return false;
             }
             else {

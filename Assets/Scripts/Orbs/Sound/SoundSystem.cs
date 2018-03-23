@@ -16,6 +16,10 @@ namespace Assets.Scripts.Orbs.Sound {
         /// Sound player of the background music
         /// </summary>
         public AudioSource bgm;
+        /// <summary>
+        /// Sound player of the boss background music
+        /// </summary>
+        public AudioSource bgmBoss;
 
         /// <summary>
         /// Template for the OrbEliminationTemplateSFX sound player
@@ -134,6 +138,7 @@ namespace Assets.Scripts.Orbs.Sound {
         /// </summary>
         public void playStageClear() {
             bgm.Pause();
+            bgmBoss.Pause();
             stageClear.Play();
         }
 
@@ -142,6 +147,7 @@ namespace Assets.Scripts.Orbs.Sound {
         /// </summary>
         public void playStageFail() {
             bgm.Pause();
+            bgmBoss.Pause();
             stageFailed.Play();
         }
 
@@ -171,6 +177,14 @@ namespace Assets.Scripts.Orbs.Sound {
         /// </summary>
         public void PlayTapErrorSFX() {
             tapError.Play();
+        }
+
+        /// <summary>
+        /// Pause the normal BGM and play the boss BGM
+        /// </summary>
+        public void PlayBossBGM() {
+            bgm.Pause();
+            bgmBoss.PlayDelayed(3);
         }
 
     }
