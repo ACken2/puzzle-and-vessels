@@ -15,10 +15,6 @@ namespace Assets.Scripts.Orbs.Canvas {
         public static HealthBar instance;
 
         /// <summary>
-        /// Reference to the Clock logo left to the health bar
-        /// </summary>
-        public Image barLogo;
-        /// <summary>
         /// Reference to the SimpleHealthBar from the plugin
         /// </summary>
         public SimpleHealthBar healthBar;
@@ -75,7 +71,6 @@ namespace Assets.Scripts.Orbs.Canvas {
         public void Start() {
             // Initialize variables
             instance = this;
-            barLogo = transform.parent.GetChild(2).GetComponent<Image>();
             // Get maximum health
             maxHealth = Coordinator.StageManager.instance.getMaxRound();
             health = maxHealth;
@@ -151,7 +146,7 @@ namespace Assets.Scripts.Orbs.Canvas {
         }
 
         /// <summary>
-        /// Call this method whenever a round end to reduce 1 HP and update the color of the health bar and its logo
+        /// Call this method whenever a round end to reduce 1 HP and update the color of the health bar
         /// </summary>
         /// <returns>Trye if all round has been used and the game should be ended</returns>
         public bool OnRoundEnded() {
@@ -161,15 +156,12 @@ namespace Assets.Scripts.Orbs.Canvas {
             // Update color
             if (health / maxHealth >= 0.666f) {
                 healthBar.UpdateColor(high);
-                barLogo.color = high;
             }
             else if (health / maxHealth >= 0.333f) {
                 healthBar.UpdateColor(mid);
-                barLogo.color = mid;
             }
             else {
                 healthBar.UpdateColor(low);
-                barLogo.color = low;
             }
             return health <= 0;
         }
