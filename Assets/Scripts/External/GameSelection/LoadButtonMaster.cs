@@ -37,12 +37,17 @@ namespace Assets.Scripts.External.GameSelection {
                 // Activate stage 2 and stage 1 button
                 stage1.gameObject.SetActive(true);
                 stage2.gameObject.SetActive(true);
+                // Show clear text in stage1
+                stage1.ShowClearText();
             }
             else {
                 // Activate all buttons
                 stage1.gameObject.SetActive(true);
                 stage2.gameObject.SetActive(true);
                 stage3.gameObject.SetActive(true);
+                // Show clear text in stage 1 and 2
+                stage1.ShowClearText();
+                stage2.ShowClearText();
             }
         }
 

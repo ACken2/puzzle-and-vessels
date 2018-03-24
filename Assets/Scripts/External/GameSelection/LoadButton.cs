@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using UnityEngine.SceneManagement;
 
 namespace Assets.Scripts.External.GameSelection {
 
@@ -12,6 +11,11 @@ namespace Assets.Scripts.External.GameSelection {
         /// Game index to be loaded when this button is clicked
         /// </summary>
         public int gameIndex = 0;
+
+        /// <summary>
+        /// GameObject for the cleared text
+        /// </summary>
+        public GameObject clearText;
 
         /// <summary>
         /// GameObject for selecting game
@@ -33,6 +37,13 @@ namespace Assets.Scripts.External.GameSelection {
             // Show member selection object and hide game select object
             memberSelect.SetActive(true);
             gameSelect.SetActive(false);
+        }
+
+        /// <summary>
+        /// Show the clear text for this game
+        /// </summary>
+        public void ShowClearText() {
+            clearText.SetActive(true);
         }
 
     }
