@@ -1,4 +1,4 @@
-# Puzzle and Vessel
+# Puzzle and Vessels
 
 This is the source code of a Puzzle and Dragon clone written in Unity 5 engine but with slight modification to fit into the theme of vascular and interventional radiology. The biggest difference is that enemy is defeated solely by the number of combos and the player only lose if he/she runs out of round.
 
