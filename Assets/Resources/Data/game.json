@@ -3,7 +3,7 @@
         {
             "gameName": "右大腿動脈(みぎだいたいどうみゃく)",
             "maxAllowedTurn": 8,
-            "endGameMessage": "師弟去Tea啦！",
+            "gameUUID": "1f1db891-b84c-4f2c-9f16-2ed76b5581ed",
             "stages": [
                 {
                     "spriteId": "a1b53006-d693-4112-93cd-4c1b8a42821f",
@@ -38,7 +38,7 @@
         {
             "gameName": "大動脈(だいどうみゃく)",
             "maxAllowedTurn": 6,
-            "endGameMessage": "師弟食早食晏啊?",
+            "gameUUID": "58dcea98-daf5-4066-b1c4-7aa7b95af82b",
             "stages": [
                 {
                     "spriteId": "0866f3ff-db86-4c4a-9ca2-a1631c528d54",
@@ -66,7 +66,7 @@
         {
             "gameName": "気管支動脈(きかんしどうみゃく)",
             "maxAllowedTurn": 8,
-            "endGameMessage": "師弟夠鐘放工啦！",
+            "gameUUID": "9f149b61-bc51-437f-bb88-0f0de7419354",
             "stages": [
                 {
                     "spriteId": "ae03f6d8-6ec8-4ec8-8002-9f5cea909e27",

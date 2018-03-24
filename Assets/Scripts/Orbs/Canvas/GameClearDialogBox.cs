@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using UnityEngine.UI;
 
 namespace Assets.Scripts.Orbs.Canvas {
 
@@ -18,9 +17,9 @@ namespace Assets.Scripts.Orbs.Canvas {
         /// </summary>
         private GameObject core;
         /// <summary>
-        /// UI text that shows the description of the clear message box
+        /// SwitchableImage that shows the description of the clear message box
         /// </summary>
-        private Text description;
+        private SwitchableImage description;
 
         /// <summary>
         /// Initialize references
@@ -28,15 +27,15 @@ namespace Assets.Scripts.Orbs.Canvas {
         public void Start() {
             instance = this;
             core = transform.GetChild(0).gameObject;
-            description = core.GetComponentsInChildren<Text>()[1];
+            description = core.GetComponentInChildren<SwitchableImage>();
         }
 
         /// <summary>
         /// Show the end game dialog box
         /// </summary>
         /// <param name="finalMessage">Final message before player leave the game</param>
-        public void EndGame(string finalMessage) {
-            description.text = finalMessage;
+        public void EndGame(string gameUUID) {
+            description.SwitchImage("Tips/" + gameUUID);
             core.SetActive(true);
             Coordinator.Coordinator.NotifyDialogActive(); // Block further input from player
         }

@@ -61,11 +61,11 @@ namespace Assets.Scripts.Orbs.Coordinator {
         }
 
         /// <summary>
-        /// Get the end game message for the current game
+        /// Get the uuid for the current game
         /// </summary>
-        /// <returns>End game message for the current game</returns>
-        public string getEndGameMessage() {
-            return Data.Games.GetEndMessage(gameIndex);
+        /// <returns>UUID for the current game</returns>
+        public string getGameUUID() {
+            return Data.Games.GetUUID(gameIndex);
         }
 
         /// <summary>

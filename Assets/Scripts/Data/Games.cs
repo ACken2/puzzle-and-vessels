@@ -68,12 +68,12 @@ namespace Assets.Scripts.Data {
         }
 
         /// <summary>
-        /// Get the message to be showed to the user when player finish a game
+        /// Get the UUID of the game
         /// </summary>
         /// <param name="gameIndex">Index of the game interested</param>
-        /// <returns>End game message</returns>
-        public static string GetEndMessage(int gameIndex) {
-            return loadedGames[gameIndex].endGameMessage;
+        /// <returns>UUID of the game</returns>
+        public static string GetUUID(int gameIndex) {
+            return loadedGames[gameIndex].gameUUID;
         }
 
     }
@@ -110,9 +110,9 @@ namespace Assets.Scripts.Data {
         /// </summary>
         public Stage[] stages;
         /// <summary>
-        /// Message to be showed at end game
+        /// UUID of the game
         /// </summary>
-        public string endGameMessage;
+        public string gameUUID;
 
     }
 

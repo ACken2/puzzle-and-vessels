@@ -93,7 +93,6 @@ namespace Assets.Scripts.Orbs.Coordinator {
                     // Play SFX
                     Sound.SoundSystem.instance.playStageFail();
                     // Game ended
-                    Canvas.LostText.instance.DisplayLostText();
                     Canvas.LostDialogBox.instance.EndGame();
                     // Set game ended
                     ended = true;
@@ -109,7 +108,7 @@ namespace Assets.Scripts.Orbs.Coordinator {
                             Sound.SoundSystem.instance.playStageClear();
                             // Game ended
                             Canvas.ClearText.instance.DisplayClearText();
-                            Canvas.GameClearDialogBox.instance.EndGame(StageManager.instance.getEndGameMessage());
+                            Canvas.GameClearDialogBox.instance.EndGame(StageManager.instance.getGameUUID());
                             // Set game ended
                             ended = true;
                         }
