@@ -84,9 +84,40 @@ namespace Assets.Scripts.Orbs.Coordinator {
             if (validRound) {
                 // Decrement timer if it is a valid round
                 bool roundDepleted = Canvas.HealthBar.instance.OnRoundEnded();
-                // Check if all round are depleted
-                if (roundDepleted) {
-                    // Player Lost
+                // Continue the game
+                // Attack the enemy and see if it dies
+                bool dead = Canvas.Enemy.instance.Attack(skillUsed, comboCounter);
+                // Load next stage if dead
+                if (dead) {
+                    if (StageManager.instance.NotifyNextStage()) {
+                        // Play SFX
+                        Sound.SoundSystem.instance.playStageClear();
+                        // Game ended
+                        Canvas.ClearText.instance.DisplayClearText();
+                        Canvas.GameClearDialogBox.instance.EndGame(StageManager.instance.getGameUUID());
+                        // Set game ended
+                        ended = true;
+                    }
+                    else if (roundDepleted) {
+                        // Check if all round are depleted if enemy is dead but not game ending which mean the player lost
+                        playerLost = true;
+                        // Animate Orb falldown
+                        Canvas.OrbPanel.instance.PlayFailAnimation();
+                        // Play SFX
+                        Sound.SoundSystem.instance.playStageFail();
+                        // Game ended
+                        Canvas.LostDialogBox.instance.EndGame();
+                        // Set game ended
+                        ended = true;
+                    }
+                    else {
+                        // Next stage
+                        // Play SFX
+                        Sound.SoundSystem.instance.playTransition();
+                    }
+                }
+                else if (roundDepleted) {
+                    // Check if all round are depleted if enemy is not dead which mean the player must have lost
                     playerLost = true;
                     // Animate Orb falldown
                     Canvas.OrbPanel.instance.PlayFailAnimation();
@@ -96,28 +127,6 @@ namespace Assets.Scripts.Orbs.Coordinator {
                     Canvas.LostDialogBox.instance.EndGame();
                     // Set game ended
                     ended = true;
-                }
-                else {
-                    // Continue the game
-                    // Attack the enemy and see if it dies
-                    bool dead = Canvas.Enemy.instance.Attack(skillUsed, comboCounter);
-                    // Load next stage if dead
-                    if (dead) {
-                        if (StageManager.instance.NotifyNextStage()) {
-                            // Play SFX
-                            Sound.SoundSystem.instance.playStageClear();
-                            // Game ended
-                            Canvas.ClearText.instance.DisplayClearText();
-                            Canvas.GameClearDialogBox.instance.EndGame(StageManager.instance.getGameUUID());
-                            // Set game ended
-                            ended = true;
-                        }
-                        else {
-                            // Next stage
-                            // Play SFX
-                            Sound.SoundSystem.instance.playTransition();
-                        }
-                    }
                 }
             }
             if (!ended) {
