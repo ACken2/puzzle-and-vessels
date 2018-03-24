@@ -17,23 +17,9 @@ namespace Assets.Scripts.External.MemberSelection {
         public GameObject selectMask;
 
         /// <summary>
-        /// Switchable image for the character sprite
-        /// </summary>
-        private Orbs.Canvas.SwitchableImage switchableImage;
-        /// <summary>
         /// Float that keep track of the time that player click down onto the member
         /// </summary>
         private float mouseDownTime = -1;
-
-        /// <summary>
-        /// Executed at start to load and set the displayed image
-        /// </summary>
-        public void Start() {
-            // Get SwitchableImage instance
-            switchableImage = transform.GetChild(0).GetChild(0).GetChild(0).GetComponent<Orbs.Canvas.SwitchableImage>();
-            // Set character sprite
-            switchableImage.SwitchImage("Character/" + memberUUID);
-        }
 
         /// <summary>
         /// Called every frame to detect long-press

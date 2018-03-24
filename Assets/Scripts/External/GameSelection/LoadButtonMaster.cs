@@ -31,13 +31,10 @@ namespace Assets.Scripts.External.GameSelection {
         public void Start() {
             if (currentProgress == 0) {
                 // Activate only stage 1
-                stage1.transform.position = stage3.transform.position;
                 stage1.gameObject.SetActive(true);
             }
             else if (currentProgress == 1) {
                 // Activate stage 2 and stage 1 button
-                stage1.transform.position = stage2.transform.position;
-                stage2.transform.position = stage3.transform.position;
                 stage1.gameObject.SetActive(true);
                 stage2.gameObject.SetActive(true);
             }

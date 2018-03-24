@@ -13,6 +13,19 @@ namespace Assets.Scripts.External.MemberSelection {
         public static MemberDescription instance;
 
         /// <summary>
+        /// Gameobject that contain the array that contain selectable member
+        /// </summary>
+        public GameObject memberArray;
+        /// <summary>
+        /// Gameobject that confirm the team selection
+        /// </summary>
+        public GameObject confirmButton;
+        /// <summary>
+        /// Gameobject that go back to the game selection
+        /// </summary>
+        public GameObject backButton;
+
+        /// <summary>
         /// Box collider for the description
         /// </summary>
         private BoxCollider2D bc2d;
@@ -41,7 +54,12 @@ namespace Assets.Scripts.External.MemberSelection {
         /// </summary>
         /// <param name="uuid">UUID of the member to be shown in description</param>
         public void ShowDescription(string uuid) {
-            bc2d.enabled = true; // Enable box collider to allow user to click away
+            // Disable buttons and member array
+            memberArray.SetActive(false);
+            backButton.SetActive(false);
+            confirmButton.SetActive(false);
+            // Enable box collider to allow user to click away
+            bc2d.enabled = true; 
             core.SetActive(true);
             description.SwitchImage("CharacterDescription/" + uuid);
         }
@@ -52,6 +70,11 @@ namespace Assets.Scripts.External.MemberSelection {
         public void OnMouseUp() {
             // Play SFX
             Common.SoundSystem.instance.PlayTapBackSFX();
+            // Re-enable buttons and member array
+            memberArray.SetActive(true);
+            backButton.SetActive(true);
+            confirmButton.SetActive(true);
+            // Disable description
             core.SetActive(false);
             bc2d.enabled = false; // Disable box collider once we are done
         }
