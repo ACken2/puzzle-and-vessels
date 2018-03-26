@@ -24,17 +24,6 @@ namespace Assets.Scripts.Data {
             }
         }
 
-        /// <summary>
-        /// Set screen size for standalone windows build
-        /// </summary>
-        private void Awake() {
-            //Set screen size for Standalone
-            #if UNITY_STANDALONE
-            Screen.SetResolution(450, 800, false);
-            Screen.fullScreen = false;
-            #endif
-        }
-
     }
 
 }
