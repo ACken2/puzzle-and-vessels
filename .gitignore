@@ -6,8 +6,10 @@
 !.gitignore
 !.gitattributes
 !README.md
+!LICENSE
 
 # Whitelisted directories/files
 !/ProjectSettings/
 !/Assets/
 !/UnityPackageManager/
+!/Release/
