@@ -4,7 +4,7 @@ This is the source code of a Puzzle and Dragon clone written in Unity 5 engine b
 
 Feel free to reuse this source code for whatever you want. However, some images and all soundtracks are copyrighted by GungHo as they are extracted from Puzzle and Dragon. Use with cautions.
 
-## In-Game Screenshorts
+## In-Game Screenshots
 
 ![Stage Selection Screenshot](https://raw.githubusercontent.com/ACken2/VIR-OrbGame/master/Release/Images/Stage-Selection-v0.1.png)
 ![Equipment Selection Screenshot](https://raw.githubusercontent.com/ACken2/VIR-OrbGame/master/Release/Images/Equipment-Selection-v0.1.png)
